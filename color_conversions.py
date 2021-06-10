@@ -72,6 +72,19 @@ def XYZ_to_RGB(X,Y,Z):
     sG = var_G * 255
     sB = var_B * 255
     
+    if (sR < 0):
+        sR = 0
+    if (sR > 255):
+        sR = 255
+    if (sG < 0):
+        sG = 0
+    if (sG > 255):
+        sG = 255
+    if (sB < 0):
+        sB = 0
+    if (sB > 255):
+        sB = 255
+    
     return sR, sG, sB
 
 
@@ -99,3 +112,18 @@ def XYZ_to_RGB(X,Y,Z):
 #print(f"g: {int(round(g2,0))}")
 #print(f"b: {int(round(b2,0))}")
 
+###
+# working with integer, instad of 255 for red the conversion 
+# returns 254. Which I think is acceptable.
+###
+
+#L = 53
+#a = 80
+#b = 67
+
+#x,y,z = LAB_to_XYZ(L,a,b)
+#r,g,b = XYZ_to_RGB(x, y, z)
+
+#print(f"r: {int(round(r,0))}")
+#print(f"g: {int(round(g,0))}")
+#print(f"b: {int(round(b,0))}")
