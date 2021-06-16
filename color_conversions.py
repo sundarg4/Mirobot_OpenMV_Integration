@@ -90,9 +90,9 @@ def XYZ_to_RGB(X,Y,Z):
 
 # TEST
 
-#L = 53.23288178584245
-#a = 80.10930952982204
-#b = 67.22006831026425
+L = 53.23288178584245
+a = 80.10930952982204
+b = 67.22006831026425
 
 #l2 = 54.3018719078641
 #a2 = 77.76052622686625
@@ -103,6 +103,8 @@ def XYZ_to_RGB(X,Y,Z):
 
 #x2,y2,z2 = LAB_to_XYZ(l2,a2,b2)
 #r2,g2,b2 = XYZ_to_RGB(x2, y2, z2)
+
+
 
 #print(f"r: {int(round(r,0))}")
 #print(f"g: {int(round(g,0))}")
@@ -117,13 +119,19 @@ def XYZ_to_RGB(X,Y,Z):
 # returns 254. Which I think is acceptable.
 ###
 
-#L = 53
-#a = 80
-#b = 67
+L = 53
+a = 80
+b = 67
 
-#x,y,z = LAB_to_XYZ(L,a,b)
-#r,g,b = XYZ_to_RGB(x, y, z)
+x,y,z = LAB_to_XYZ(L,a,b)
+r,g,b = XYZ_to_RGB(x, y, z)
 
-#print(f"r: {int(round(r,0))}")
-#print(f"g: {int(round(g,0))}")
-#print(f"b: {int(round(b,0))}")
+print(f"r: {r}")
+print(f"g: {g}")
+print(f"b: {b}")
+
+print()
+
+print(f"r: {int(round(r,0))}")
+print(f"g: {int(round(g,0))}")
+print(f"b: {int(round(b,0))}")
