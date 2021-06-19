@@ -1,17 +1,53 @@
-####
+##########################################################
+#
+#   CHANGE LOG
+#
+##########################################################
+#
+# - Added simple image to better visualize diemensions
+#   of the vison set table.
+#
+# - Cleaned up unused code. If need to change back
+#   we can refer to an older version of the script.
 #
 #
-# TODO:
+# - Moved the calibration success check out of the
+#   get_roi function and out into the main program.
 #
-#  Check calibration function
-#  Check ROI function
-#  Check return values and loops
+# - In get_roi function, changed b_width and b_height
+#   for roi_width and roi_height.
 #
-#  Check main loop.
+# - Added some comments
+#
+##########################################################
 
-#  Check draw_blobs and try the new rectangle method!!
-#
 
+
+
+##########################################################
+#
+#   DIEMENSIONS
+#
+##########################################################
+#
+#
+#              28.6
+#            < - - >
+#             _ _ _
+#        ^   |     |    ^
+#        |   |     |    |
+#  24.0  |   |     |    | 23.9
+#        |   | _ _ |    |
+#
+#            < - - >
+#              28.5
+#
+#
+#widthdown = 28.5
+#widthup = 28.6
+#heightleft = 24.0
+#heightright = 23.9
+##########################################################
 
 
 import sensor, image, time, pyb, math
@@ -21,6 +57,12 @@ sensor.set_pixformat(sensor.GRAYSCALE)
 sensor.set_framesize(sensor.QQVGA)
 sensor.skip_frames(time = 2000)
 clock = time.clock()
+
+##########################################################
+#
+#   Globals
+#
+##########################################################
 
 # April Tag families to detect
 tag_families = 0
@@ -32,17 +74,22 @@ tag_families |= image.TAG36H11 # comment out to disable this family (default fam
 tag_families |= image.ARTOOLKIT
 
 # threshold values to find_blob method
-w_thresholds = (80, 100, -18, 90, -17, 69)
+w_thresholds = (58, 89, -2, 9, -19, 18)
 r_thresholds = (45, 79, 39, 90, -7, 78)
-g_thresholds = (37, 86, -105, -22, -45, 71)
-#b_thresholds = (9, 29, 10, 86, -69, -15)
-b_thresholds = (28, 72, -60, 31, -67, -13)
+g_thresholds = (31, 81, -88, -27, -51, 41)
+b_thresholds = (9, 66, -20, 85, -128, -14)
 
 # color of lines drawn around min area
 r = (pyb.rng() % 127) + 128
 g = (pyb.rng() % 127) + 128
 b = (pyb.rng() % 127) + 128
 
+
+##########################################################
+#
+#   Function definitions
+#
+##########################################################
 
 def family_name(tag):
     if(tag.family() == image.TAG16H5):
@@ -70,88 +117,120 @@ def calibration():
         #finding all the April tags and adding it in the april_tags dictionary with id
         for tag in img.find_apriltags(families=tag_families):
             tag_id = tag.id()
-            #x = 0
-            #y = 0
-            #april_tags.update({id:[x,y]})
             april_tags.update({tag_id:tag})
 
     # if we detect all the 4 april tags return true, else false
     if(len(april_tags)==4):
-        print("Calibration Success!")
         #print(april_tags)
         return april_tags, True
     else:
-        print("Calibration Failed!")
         return april_tags, False
 
-#returns avg sides of the april tags
-def get_average_side_length(s1, s2):
-    return (s1 + s2) / 2
+##########################################################
+#
+#  get_roi
+#
+#
+# Finds the region of interest for where cubes are detected.
+#
+# The algorithm loops through all the april tags,
+# finds its corners and loops through them.
+#
+# For each corner that corners x and y coordinates will be
+# added to each other, If this sum is smaller then x_min + y_min
+# then this will be the new values for x_min and y_min.
+# And vice versa with larger values than x_max + y_max.
+#
+# The width of the ROI is then found by subtracting x_min from x_max.
+# The height of the ROI is found by subtracting y_min from y_max.
+#
+# The find blobs function that will be fed theese values requires
+# they are of the type int so therefore round them and then convert them to
+# integers before we return them,
+#
+# The values returned will be the top left corner of the ROI given by
+# x_min and y_min. And also the width and height of the ROI.
+#
+# Importnat to remember is that ROI is found using QQVGA so
+# there is neccessary to call the function upscale_QQVGA_to_QVGA
+# on theese coordinates before using them to find blobs.
+#
+##########################################################
+def get_roi(april_tags):
+    # Initializing x/y min and max.
+    x_min = math.inf
+    y_min = math.inf
+    x_max = 0
+    y_max = 0
+
+    for tag_id,tag in april_tags.items():
+
+        # The four corners of a april tag
+        tag_corners = tag.corners()
+
+        # Iterating the Apriltag's corners and finding the min/max of x and y
+        for corner in tag_corners:
+            x_val = corner[0]
+            y_val = corner[1]
+            temp_sum = x_val + y_val
+
+            if (temp_sum < (x_min+y_min)):
+                x_min = x_val
+                y_min = y_val
+
+            if (temp_sum > (x_max+y_max)):
+                x_max = x_val
+                y_max = y_val
+
+    roi_width = int ( round( x_max - x_min ))
+    roi_height = int(  math.ceil( y_max - y_min ))
+
+    return x_min, y_min, roi_width, roi_height
+
+
+##########################################################
+#
+# Converts coordinates from QQVGA to QVGA
+#
+##########################################################
 
 def upscale_QQVGA_to_QVGA(x,y,w,h):
     return x*2,y*2,w*2,h*2
 
+##########################################################
+#
+#  Masks the april tags so that they wont be detected
+#  by the object detection function,
+#
+##########################################################
+def mask_april_tags(april_tags):
 
-def get_roi(april_tags, success):
-    if (success):
-        #img = sensor.snapshot().lens_corr(strength = 1.8, zoom = 1.0)
-        #sensor.skip_frames()
+    tag_xy = []
 
-        x_min = 20000
-        y_min = 20000
-        x_max = 0
-        y_max = 0
-        #print("Still alive above NONE")
-        min_tag = None
-        max_tag = None
-        #print("Still alive above loop")
+    for tag_id,tag in april_tags.items():
+        tag_corners = tag.corners()
+        xy_min = 2000
+        x = 0
+        y = 0
 
-        if(success):
-            for tag_id,tag in april_tags.items():
-                #id = tag.id()
-                print(tag)
-                print('\n')
-                tag_corners = tag.corners()
-                #print(tag_corners)
-                #Iterating the Apriltag's corners and finding the min/max of x and y
-                for corner in tag_corners:
-                    #print(corner)
-                    #for corner in cornerList:
-                    #print(corner)
-                    x_val = corner[0]
-                    y_val = corner[1]
-                    temp_sum = x_val + y_val
-                    if (temp_sum < (x_min+y_min)):
-                        x_min = x_val
-                        y_min = y_val
+        for corner in tag_corners:
+            x_val = corner[0]
+            y_val = corner[1]
+            if (x_val+y_val < xy_min):
+                xy_min = x_val+y_val
+                x = x_val
+                y = y_val
 
-                        min_tag = tag
-                    if (temp_sum > (x_max+y_max)):
-                        x_max = x_val
-                        y_max = y_val
+        X,Y,W,H = upscale_QQVGA_to_QVGA(x,y,tag.w(),tag.h())
 
-                        max_tag = tag
+        img.draw_rectangle(X-10,Y-10,W+16,H+16, color=0, fill=True)
 
-        min_width = min_tag.w()
-        min_height = min_tag.h()
-        max_width = max_tag.w()
-        max_height = max_tag.h()
-
-        min_tag_side_length = get_average_side_length(min_width, min_height)
-        max_tag_side_length = get_average_side_length(max_width, max_height)
-
-        y_min = int( round( y_min + min_tag_side_length))
-        y_max = int( round(y_max - max_tag_side_length))
-
-        b_width = int ( round( x_max - x_min ))
-        b_height =int(  math.ceil( y_max - y_min ))
-
-        print(b_width)
-        print(b_height)
-
-        return x_min, y_min+4, b_width, b_height-8
-
-
+##########################################################
+#
+# Finding all blobs of desired color and returns a list
+# of those blobs and another list of the length of those lists.
+#
+##########################################################
 def find_blobs(x,y,w,h):
     #roi=(50,0,200,238)
     w_blobs = img.find_blobs([w_thresholds], area_threshold=100, merge=False, roi=(x,y,w,h))
@@ -166,6 +245,14 @@ def find_blobs(x,y,w,h):
 
     return [w_blobs, r_blobs, g_blobs, b_blobs], [red, green, blue, white]
 
+##########################################################
+#
+# Drawing lines between the corners of the minimum area
+# of each blob.
+#
+# Also draws a cross at the center of each blob.
+#
+##########################################################
 
 def draw_blobs(blobs, x, y, w, h):
     # Draw blobs
@@ -187,67 +274,60 @@ def draw_blobs(blobs, x, y, w, h):
             img.draw_rectangle(x,y,w,h, color=255)
             # Draw a cross in the middle of the blob
             img.draw_cross(blob.cx(), blob.cy(), color=255)
-            print(angle)
+
+
+##########################################################
+#
+#   Main program
+#
+##########################################################
+
 
 april_tags_dict = {}
 april_tags_dict , calib_result = calibration()
 
+if (calib_result):
 
-sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QVGA)
+    print("Calibration Success!")
 
-sensor.set_auto_gain(False) # must be turned off for color tracking
-sensor.set_auto_whitebal(False) # must be turned off for color tracking
-sensor.skip_frames()
+    sensor.set_pixformat(sensor.RGB565)
+    sensor.set_framesize(sensor.QVGA)
 
-
-x,y,w,h = get_roi(april_tags_dict , calib_result)
-X,Y,W,H = upscale_QQVGA_to_QVGA(x,y,w,h)
-
+    sensor.set_auto_gain(False) # must be turned off for color tracking
+    sensor.set_auto_whitebal(False) # must be turned off for color tracking
+    sensor.skip_frames()
 
 
-while(True):
+    x,y,w,h = get_roi(april_tags_dict , calib_result)
+    X,Y,W,H = upscale_QQVGA_to_QVGA(x,y,w,h)
+
+
+
+    while(True):
     clock.tick()
     img = sensor.snapshot().lens_corr(strength = 1.8, zoom = 1.0)
-    bimg = img.to_bitmap(copy=True).clear().draw_rectangle(100, 100, 200, 200, fill=True, color=1)
-    img.mean(2, mask=bimg)
-    #img.mask_rectangle([100, 100, 20, 20])
+    mask_april_tags(april_tags_dict)
     blobs, len_blobs_list = find_blobs(X,Y,W,H)
     draw_blobs(blobs, X,Y,W,H)
+    print(len_blobs_list)
+
+else:
+    print("Calibration Failed!")
+
+    ## Prompt user to try again or exit the program
+
+    ## If calibration fails more than e.g 3 times in a row
+    ## then ask the user to wait for some time while waiting
+    ## for the camera to cool down. Set some timer to display
+    ## how long the user must wait.
+    ## Then promt the user to try again or quit the program.
+    ## Possibly also give a hint to the user to check the
+    ## focus of the camera lens, or that the view of the
+    ## april tags are not obstructed,
 
 
 
 
 
 
-
-
-
-
-
-####################### GARBAGE :P #########################
-
-
-
-#     get_roi:
-#
-#       for i in range(5):
-#            clock.tick()
-#            img = sensor.snapshot().lens_corr(strength = 1.8, zoom = 1.0)
-#            sensor.skip_frames(25)
-#            for tag in img.find_apriltags(families=tag_families):
-#                if(len(april_tags)>0):
-#                    id = tag.id()
-#                    list_center = april_tags.get(id)
-#                    list_center[0] = list_center[0] + tag.cx()
-#                    list_center[1] = list_center[1] + tag.cy()
-#                    april_tags.update({id: [list_center[0],list_center[1]]})
-
-       # getting average value of coordinates of the april tag center
-#        for key in april_tags:
-##            list_center = april_tags.get(key)
- #           list_center[0] = list_center[0]/5
- #           list_center[1] = list_center[1]/5
- #           april_tags.update({key: [list_center[0],list_center[1]]})
- #       print(april_tags)
 

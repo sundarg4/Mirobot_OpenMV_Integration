@@ -1,0 +1,1642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>mirobot.mirobot API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mirobot.mirobot</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from types import SimpleNamespace
+
+from .base_mirobot import BaseMirobot
+from .base_rover import BaseRover
+from .mirobot_status import MirobotAngles, MirobotCartesians
+
+
+class Mirobot(BaseMirobot):
+    &#34;&#34;&#34; A class for managing and maintaining known Mirobot operations.&#34;&#34;&#34;
+
+    def __init__(self, *base_mirobot_args, **base_mirobot_kwargs):
+        &#34;&#34;&#34;
+        Initialization of the `Mirobot` class.
+
+        Parameters
+        ----------
+        *base_mirobot_args : Any
+            Arguments that are passed into `mirobot.base_mirobot.BaseMirobot`. See `mirobot.base_mirobot.BaseMirobot.__init__` for more details.
+
+        **base_mirobot_kwargs : Any
+            Keyword arguments that are passed into `mirobot.base_mirobot.BaseMirobot`. See `mirobot.base_mirobot.BaseMirobot.__init__` for more details.
+
+        Returns
+        -------
+        class : `Mirobot`
+
+        &#34;&#34;&#34;
+        super().__init__(*base_mirobot_args, **base_mirobot_kwargs)
+
+        self._rover = BaseRover(self)
+
+        self.move = SimpleNamespace(cartesian=SimpleNamespace(ptp=self.go_to_cartesian_ptp,
+                                                              lin=self.go_to_cartesian_lin),
+                                    angle=self.go_to_axis,
+                                    rail=self.go_to_slide_rail)
+        &#34;&#34;&#34; The root of the move alias. Uses `go_to_...` methods. Can be used as `mirobot.move.ptp(...)` or `mirobot.move.angle(...)` &#34;&#34;&#34;
+
+        self.increment = SimpleNamespace(cartesian=SimpleNamespace(ptp=self.increment_cartesian_ptp,
+                                                                   lin=self.increment_cartesian_lin),
+                                         angle=self.increment_axis,
+                                         rail=self.increment_slide_rail)
+        &#34;&#34;&#34; The root of the increment alias. Uses `increment_...` methods. Can be used as `mirobot.increment.ptp(...)` or `mirobot.increment.angle(...)` &#34;&#34;&#34;
+
+        wheel_aliases = SimpleNamespace(upper=SimpleNamespace(left=self._rover.move_upper_left,
+                                                              right=self._rover.move_upper_right),
+                                        bottom=SimpleNamespace(left=self._rover.move_bottom_left,
+                                                               right=self._rover.move_bottom_right),
+                                        left=SimpleNamespace(upper=self._rover.move_upper_left,
+                                                             bottom=self._rover.move_bottom_left),
+                                        right=SimpleNamespace(upper=self._rover.move_upper_right,
+                                                              bottom=self._rover.move_bottom_right))
+
+        self.rover = SimpleNamespace(wheel=wheel_aliases,
+                                     rotate=SimpleNamespace(left=self._rover.rotate_left,
+                                                            right=self._rover.rotate_right),
+                                     move=SimpleNamespace(forward=self._rover.move_forward,
+                                                          backward=self._rover.move_backward))
+        &#34;&#34;&#34; The root of the rover alias. Uses methods from `mirobot.base_rover.BaseRover`. Can be used as `mirobot.rover.wheel.upper.right(...)` or `mirobot.rover.rotate.left(...)` or `mirobot.rover.move.forward(...)`&#34;&#34;&#34;
+
+    @property
+    def state(self):
+        &#34;&#34;&#34; The brief descriptor string for Mirobot&#39;s state. &#34;&#34;&#34;
+        return self.status.state
+
+    @property
+    def cartesian(self):
+        &#34;&#34;&#34; Dataclass that holds the cartesian values and roll/pitch/yaw angles. &#34;&#34;&#34;
+        return self.status.cartesian
+
+    @property
+    def angle(self):
+        &#34;&#34;&#34; Dataclass that holds Mirobot&#39;s angular values including the rail position value. &#34;&#34;&#34;
+        return self.status.angle
+
+    @property
+    def rail(self):
+        &#34;&#34;&#34; Location of external slide rail module &#34;&#34;&#34;
+        return self.status.angle.d
+
+    @property
+    def valve_pwm(self):
+        &#34;&#34;&#34; The current pwm of the value module. (eg. gripper) &#34;&#34;&#34;
+        return self.status.valve_pwm
+
+    @property
+    def pump_pwm(self):
+        &#34;&#34;&#34; The current pwm of the pnuematic pump module. &#34;&#34;&#34;
+        return self.status.pump_pwm
+
+    @property
+    def motion_mode(self):
+        &#34;&#34;&#34; Whether Mirobot is currently in coordinate mode (`False`) or joint-motion mode (`True`) &#34;&#34;&#34;
+        return self.status.motion_mode
+
+    def go_to_zero(self, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Send all axes to their respective zero positions.
+
+        Parameters
+        ----------
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        return self.go_to_axis(0, 0, 0, 0, 0, 0, 0, speed=speed, wait=wait)
+
+    def go_to_cartesian_lin(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Linear move to a position in cartesian coordinates. (Command: `M20 G90 G1`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position.
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().go_to_cartesian_lin(**inputs,
+                                           speed=speed, wait=wait)
+
+    def go_to_cartesian_ptp(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Point-to-point move to a position in cartesian coordinates. (Command: `M20 G90 G0`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position.
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().go_to_cartesian_ptp(**inputs,
+                                           speed=speed, wait=wait)
+
+    def go_to_axis(self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Send all axes to a specific position in angular coordinates. (Command: `M21 G90`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotAngles]
+            (Default value = `None`) If `float`, this represents the angle of axis 1.
+                                     If of type `mirobot.mirobot_status.MirobotAngles`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Angle of axis 2.
+        z : float
+            (Default value = `None`) Angle of axis 3.
+        a : float
+            (Default value = `None`) Angle of axis 4.
+        b : float
+            (Default value = `None`) Angle of axis 5.
+        c : float
+            (Default value = `None`) Angle of axis 6.
+        d : float
+            (Default value = `None`) Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotAngles):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c, &#39;d&#39;: d}
+
+        return super().go_to_axis(**inputs,
+                                  speed=speed, wait=wait)
+
+    def increment_cartesian_lin(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Linear increment in cartesian coordinates. (Command: `M20 G91 G1`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().increment_cartesian_lin(**inputs,
+                                               speed=speed, wait=wait)
+
+    def increment_cartesian_ptp(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Point-to-point increment in cartesian coordinates. (Command: `M20 G91 G0`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position.
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().increment_cartesian_ptp(**inputs,
+                                               speed=speed, wait=wait)
+
+    def increment_axis(self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Increment all axes a specified amount in angular coordinates. (Command: `M21 G91`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotAngles]
+            (Default value = `None`) If `float`, this represents the angle of axis 1.
+                                     If of type `mirobot.mirobot_status.MirobotAngles`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Angle of axis 2.
+        z : float
+            (Default value = `None`) Angle of axis 3.
+        a : float
+            (Default value = `None`) Angle of axis 4.
+        b : float
+            (Default value = `None`) Angle of axis 5.
+        c : float
+            (Default value = `None`) Angle of axis 6.
+        d : float
+            (Default value = `None`) Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotAngles):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c, &#39;d&#39;: d}
+
+        return super().increment_axis(**inputs,
+                                      speed=speed, wait=wait)
+
+    def increment_slide_rail(self, d, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Increment slide rail position a specified amount. (Command: `M21 G91`)
+
+        Parameters
+        ----------
+        d : float
+            Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+
+        return super().increment_axis(d=d,
+                                      speed=speed, wait=wait)
+
+    def go_to_slide_rail(self, d, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Go to the slide rail position specified. (Command: `M21 G90`)
+
+        Parameters
+        ----------
+        d : float
+            Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+
+        return super().go_to_axis(d=d,
+                                  speed=speed, wait=wait)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="mirobot.mirobot.Mirobot"><code class="flex name class">
+<span>class <span class="ident">Mirobot</span></span>
+<span>(</span><span>*base_mirobot_args, **base_mirobot_kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>A class for managing and maintaining known Mirobot operations.</p>
+<p>Initialization of the <a title="mirobot.mirobot.Mirobot" href="#mirobot.mirobot.Mirobot"><code>Mirobot</code></a> class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>*base_mirobot_args</code></strong> :&ensp;<code>Any</code></dt>
+<dd>Arguments that are passed into <a title="mirobot.base_mirobot.BaseMirobot" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot"><code>BaseMirobot</code></a>. See <a title="mirobot.base_mirobot.BaseMirobot" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot"><code>BaseMirobot</code></a> for more details.</dd>
+<dt><strong><code>**base_mirobot_kwargs</code></strong> :&ensp;<code>Any</code></dt>
+<dd>Keyword arguments that are passed into <a title="mirobot.base_mirobot.BaseMirobot" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot"><code>BaseMirobot</code></a>. See <a title="mirobot.base_mirobot.BaseMirobot" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot"><code>BaseMirobot</code></a> for more details.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>class</code></strong> :&ensp;<code>Mirobot</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Mirobot(BaseMirobot):
+    &#34;&#34;&#34; A class for managing and maintaining known Mirobot operations.&#34;&#34;&#34;
+
+    def __init__(self, *base_mirobot_args, **base_mirobot_kwargs):
+        &#34;&#34;&#34;
+        Initialization of the `Mirobot` class.
+
+        Parameters
+        ----------
+        *base_mirobot_args : Any
+            Arguments that are passed into `mirobot.base_mirobot.BaseMirobot`. See `mirobot.base_mirobot.BaseMirobot.__init__` for more details.
+
+        **base_mirobot_kwargs : Any
+            Keyword arguments that are passed into `mirobot.base_mirobot.BaseMirobot`. See `mirobot.base_mirobot.BaseMirobot.__init__` for more details.
+
+        Returns
+        -------
+        class : `Mirobot`
+
+        &#34;&#34;&#34;
+        super().__init__(*base_mirobot_args, **base_mirobot_kwargs)
+
+        self._rover = BaseRover(self)
+
+        self.move = SimpleNamespace(cartesian=SimpleNamespace(ptp=self.go_to_cartesian_ptp,
+                                                              lin=self.go_to_cartesian_lin),
+                                    angle=self.go_to_axis,
+                                    rail=self.go_to_slide_rail)
+        &#34;&#34;&#34; The root of the move alias. Uses `go_to_...` methods. Can be used as `mirobot.move.ptp(...)` or `mirobot.move.angle(...)` &#34;&#34;&#34;
+
+        self.increment = SimpleNamespace(cartesian=SimpleNamespace(ptp=self.increment_cartesian_ptp,
+                                                                   lin=self.increment_cartesian_lin),
+                                         angle=self.increment_axis,
+                                         rail=self.increment_slide_rail)
+        &#34;&#34;&#34; The root of the increment alias. Uses `increment_...` methods. Can be used as `mirobot.increment.ptp(...)` or `mirobot.increment.angle(...)` &#34;&#34;&#34;
+
+        wheel_aliases = SimpleNamespace(upper=SimpleNamespace(left=self._rover.move_upper_left,
+                                                              right=self._rover.move_upper_right),
+                                        bottom=SimpleNamespace(left=self._rover.move_bottom_left,
+                                                               right=self._rover.move_bottom_right),
+                                        left=SimpleNamespace(upper=self._rover.move_upper_left,
+                                                             bottom=self._rover.move_bottom_left),
+                                        right=SimpleNamespace(upper=self._rover.move_upper_right,
+                                                              bottom=self._rover.move_bottom_right))
+
+        self.rover = SimpleNamespace(wheel=wheel_aliases,
+                                     rotate=SimpleNamespace(left=self._rover.rotate_left,
+                                                            right=self._rover.rotate_right),
+                                     move=SimpleNamespace(forward=self._rover.move_forward,
+                                                          backward=self._rover.move_backward))
+        &#34;&#34;&#34; The root of the rover alias. Uses methods from `mirobot.base_rover.BaseRover`. Can be used as `mirobot.rover.wheel.upper.right(...)` or `mirobot.rover.rotate.left(...)` or `mirobot.rover.move.forward(...)`&#34;&#34;&#34;
+
+    @property
+    def state(self):
+        &#34;&#34;&#34; The brief descriptor string for Mirobot&#39;s state. &#34;&#34;&#34;
+        return self.status.state
+
+    @property
+    def cartesian(self):
+        &#34;&#34;&#34; Dataclass that holds the cartesian values and roll/pitch/yaw angles. &#34;&#34;&#34;
+        return self.status.cartesian
+
+    @property
+    def angle(self):
+        &#34;&#34;&#34; Dataclass that holds Mirobot&#39;s angular values including the rail position value. &#34;&#34;&#34;
+        return self.status.angle
+
+    @property
+    def rail(self):
+        &#34;&#34;&#34; Location of external slide rail module &#34;&#34;&#34;
+        return self.status.angle.d
+
+    @property
+    def valve_pwm(self):
+        &#34;&#34;&#34; The current pwm of the value module. (eg. gripper) &#34;&#34;&#34;
+        return self.status.valve_pwm
+
+    @property
+    def pump_pwm(self):
+        &#34;&#34;&#34; The current pwm of the pnuematic pump module. &#34;&#34;&#34;
+        return self.status.pump_pwm
+
+    @property
+    def motion_mode(self):
+        &#34;&#34;&#34; Whether Mirobot is currently in coordinate mode (`False`) or joint-motion mode (`True`) &#34;&#34;&#34;
+        return self.status.motion_mode
+
+    def go_to_zero(self, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Send all axes to their respective zero positions.
+
+        Parameters
+        ----------
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        return self.go_to_axis(0, 0, 0, 0, 0, 0, 0, speed=speed, wait=wait)
+
+    def go_to_cartesian_lin(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Linear move to a position in cartesian coordinates. (Command: `M20 G90 G1`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position.
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().go_to_cartesian_lin(**inputs,
+                                           speed=speed, wait=wait)
+
+    def go_to_cartesian_ptp(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Point-to-point move to a position in cartesian coordinates. (Command: `M20 G90 G0`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position.
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().go_to_cartesian_ptp(**inputs,
+                                           speed=speed, wait=wait)
+
+    def go_to_axis(self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Send all axes to a specific position in angular coordinates. (Command: `M21 G90`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotAngles]
+            (Default value = `None`) If `float`, this represents the angle of axis 1.
+                                     If of type `mirobot.mirobot_status.MirobotAngles`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Angle of axis 2.
+        z : float
+            (Default value = `None`) Angle of axis 3.
+        a : float
+            (Default value = `None`) Angle of axis 4.
+        b : float
+            (Default value = `None`) Angle of axis 5.
+        c : float
+            (Default value = `None`) Angle of axis 6.
+        d : float
+            (Default value = `None`) Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotAngles):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c, &#39;d&#39;: d}
+
+        return super().go_to_axis(**inputs,
+                                  speed=speed, wait=wait)
+
+    def increment_cartesian_lin(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Linear increment in cartesian coordinates. (Command: `M20 G91 G1`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().increment_cartesian_lin(**inputs,
+                                               speed=speed, wait=wait)
+
+    def increment_cartesian_ptp(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Point-to-point increment in cartesian coordinates. (Command: `M20 G91 G0`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotCartesians]
+            (Default value = `None`) If `float`, this represents the X-axis position.
+                                     If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Y-axis position.
+        z : float
+            (Default value = `None`) Z-axis position.
+        a : float
+            (Default value = `None`) Orientation angle: Roll angle
+        b : float
+            (Default value = `None`) Orientation angle: Pitch angle
+        c : float
+            (Default value = `None`) Orientation angle: Yaw angle
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotCartesians):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+        return super().increment_cartesian_ptp(**inputs,
+                                               speed=speed, wait=wait)
+
+    def increment_axis(self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Increment all axes a specified amount in angular coordinates. (Command: `M21 G91`)
+
+        Parameters
+        ----------
+        x : Union[float, MirobotAngles]
+            (Default value = `None`) If `float`, this represents the angle of axis 1.
+                                     If of type `mirobot.mirobot_status.MirobotAngles`, then this will be used for all positional values instead.
+        y : float
+            (Default value = `None`) Angle of axis 2.
+        z : float
+            (Default value = `None`) Angle of axis 3.
+        a : float
+            (Default value = `None`) Angle of axis 4.
+        b : float
+            (Default value = `None`) Angle of axis 5.
+        c : float
+            (Default value = `None`) Angle of axis 6.
+        d : float
+            (Default value = `None`) Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+        if isinstance(x, MirobotAngles):
+            inputs = x.asdict()
+
+        else:
+            inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c, &#39;d&#39;: d}
+
+        return super().increment_axis(**inputs,
+                                      speed=speed, wait=wait)
+
+    def increment_slide_rail(self, d, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Increment slide rail position a specified amount. (Command: `M21 G91`)
+
+        Parameters
+        ----------
+        d : float
+            Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+
+        return super().increment_axis(d=d,
+                                      speed=speed, wait=wait)
+
+    def go_to_slide_rail(self, d, speed=None, wait=None):
+        &#34;&#34;&#34;
+        Go to the slide rail position specified. (Command: `M21 G90`)
+
+        Parameters
+        ----------
+        d : float
+            Location of slide rail module.
+        speed : int
+            (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+        wait : bool
+            (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+        Returns
+        -------
+        msg : List[str] or bool
+            If `wait` is `True`, then return a list of strings which contains message output.
+            If `wait` is `False`, then return whether sending the message succeeded.
+        &#34;&#34;&#34;
+
+        return super().go_to_axis(d=d,
+                                  speed=speed, wait=wait)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="mirobot.base_mirobot.BaseMirobot" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot">BaseMirobot</a></li>
+<li>contextlib.AbstractContextManager</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="mirobot.mirobot.Mirobot.angle"><code class="name">var <span class="ident">angle</span></code></dt>
+<dd>
+<section class="desc"><p>Dataclass that holds Mirobot's angular values including the rail position value.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def angle(self):
+    &#34;&#34;&#34; Dataclass that holds Mirobot&#39;s angular values including the rail position value. &#34;&#34;&#34;
+    return self.status.angle</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.cartesian"><code class="name">var <span class="ident">cartesian</span></code></dt>
+<dd>
+<section class="desc"><p>Dataclass that holds the cartesian values and roll/pitch/yaw angles.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def cartesian(self):
+    &#34;&#34;&#34; Dataclass that holds the cartesian values and roll/pitch/yaw angles. &#34;&#34;&#34;
+    return self.status.cartesian</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.increment"><code class="name">var <span class="ident">increment</span></code></dt>
+<dd>
+<section class="desc"><p>The root of the increment alias. Uses <code>increment_...</code> methods. Can be used as <code>mirobot.increment.ptp(...)</code> or <code>mirobot.increment.angle(...)</code></p></section>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.motion_mode"><code class="name">var <span class="ident">motion_mode</span></code></dt>
+<dd>
+<section class="desc"><p>Whether Mirobot is currently in coordinate mode (<code>False</code>) or joint-motion mode (<code>True</code>)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def motion_mode(self):
+    &#34;&#34;&#34; Whether Mirobot is currently in coordinate mode (`False`) or joint-motion mode (`True`) &#34;&#34;&#34;
+    return self.status.motion_mode</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.move"><code class="name">var <span class="ident">move</span></code></dt>
+<dd>
+<section class="desc"><p>The root of the move alias. Uses <code>go_to_...</code> methods. Can be used as <code>mirobot.move.ptp(...)</code> or <code>mirobot.move.angle(...)</code></p></section>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.pump_pwm"><code class="name">var <span class="ident">pump_pwm</span></code></dt>
+<dd>
+<section class="desc"><p>The current pwm of the pnuematic pump module.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pump_pwm(self):
+    &#34;&#34;&#34; The current pwm of the pnuematic pump module. &#34;&#34;&#34;
+    return self.status.pump_pwm</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.rail"><code class="name">var <span class="ident">rail</span></code></dt>
+<dd>
+<section class="desc"><p>Location of external slide rail module</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def rail(self):
+    &#34;&#34;&#34; Location of external slide rail module &#34;&#34;&#34;
+    return self.status.angle.d</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.rover"><code class="name">var <span class="ident">rover</span></code></dt>
+<dd>
+<section class="desc"><p>The root of the rover alias. Uses methods from <a title="mirobot.base_rover.BaseRover" href="base_rover.html#mirobot.base_rover.BaseRover"><code>BaseRover</code></a>. Can be used as <code>mirobot.rover.wheel.upper.right(...)</code> or <code>mirobot.rover.rotate.left(...)</code> or <code>mirobot.rover.move.forward(...)</code></p></section>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<section class="desc"><p>The brief descriptor string for Mirobot's state.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def state(self):
+    &#34;&#34;&#34; The brief descriptor string for Mirobot&#39;s state. &#34;&#34;&#34;
+    return self.status.state</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.valve_pwm"><code class="name">var <span class="ident">valve_pwm</span></code></dt>
+<dd>
+<section class="desc"><p>The current pwm of the value module. (eg. gripper)</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def valve_pwm(self):
+    &#34;&#34;&#34; The current pwm of the value module. (eg. gripper) &#34;&#34;&#34;
+    return self.status.valve_pwm</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="mirobot.mirobot.Mirobot.go_to_axis"><code class="name flex">
+<span>def <span class="ident">go_to_axis</span></span>(<span>self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Send all axes to a specific position in angular coordinates. (Command: <code>M21 G90</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>Union</code>[<code>float</code>, <code>MirobotAngles</code>]</dt>
+<dd>(Default value = <code>None</code>) If <code>float</code>, this represents the angle of axis 1.
+If of type <a title="mirobot.mirobot_status.MirobotAngles" href="mirobot_status.html#mirobot.mirobot_status.MirobotAngles"><code>MirobotAngles</code></a>, then this will be used for all positional values instead.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 2.</dd>
+<dt><strong><code>z</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 3.</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 4.</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 5.</dd>
+<dt><strong><code>c</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 6.</dd>
+<dt><strong><code>d</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Location of slide rail module.</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def go_to_axis(self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Send all axes to a specific position in angular coordinates. (Command: `M21 G90`)
+
+    Parameters
+    ----------
+    x : Union[float, MirobotAngles]
+        (Default value = `None`) If `float`, this represents the angle of axis 1.
+                                 If of type `mirobot.mirobot_status.MirobotAngles`, then this will be used for all positional values instead.
+    y : float
+        (Default value = `None`) Angle of axis 2.
+    z : float
+        (Default value = `None`) Angle of axis 3.
+    a : float
+        (Default value = `None`) Angle of axis 4.
+    b : float
+        (Default value = `None`) Angle of axis 5.
+    c : float
+        (Default value = `None`) Angle of axis 6.
+    d : float
+        (Default value = `None`) Location of slide rail module.
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+    if isinstance(x, MirobotAngles):
+        inputs = x.asdict()
+
+    else:
+        inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c, &#39;d&#39;: d}
+
+    return super().go_to_axis(**inputs,
+                              speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.go_to_cartesian_lin"><code class="name flex">
+<span>def <span class="ident">go_to_cartesian_lin</span></span>(<span>self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Linear move to a position in cartesian coordinates. (Command: <code>M20 G90 G1</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>Union</code>[<code>float</code>, <code>MirobotCartesians</code>]</dt>
+<dd>(Default value = <code>None</code>) If <code>float</code>, this represents the X-axis position.
+If of type <a title="mirobot.mirobot_status.MirobotCartesians" href="mirobot_status.html#mirobot.mirobot_status.MirobotCartesians"><code>MirobotCartesians</code></a>, then this will be used for all positional values instead.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Y-axis position.</dd>
+<dt><strong><code>z</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Z-axis position.</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Roll angle</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Pitch angle</dd>
+<dt><strong><code>c</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Yaw angle</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def go_to_cartesian_lin(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Linear move to a position in cartesian coordinates. (Command: `M20 G90 G1`)
+
+    Parameters
+    ----------
+    x : Union[float, MirobotCartesians]
+        (Default value = `None`) If `float`, this represents the X-axis position.
+                                 If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+    y : float
+        (Default value = `None`) Y-axis position.
+    z : float
+        (Default value = `None`) Z-axis position.
+    a : float
+        (Default value = `None`) Orientation angle: Roll angle
+    b : float
+        (Default value = `None`) Orientation angle: Pitch angle
+    c : float
+        (Default value = `None`) Orientation angle: Yaw angle
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+    if isinstance(x, MirobotCartesians):
+        inputs = x.asdict()
+
+    else:
+        inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+    return super().go_to_cartesian_lin(**inputs,
+                                       speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.go_to_cartesian_ptp"><code class="name flex">
+<span>def <span class="ident">go_to_cartesian_ptp</span></span>(<span>self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Point-to-point move to a position in cartesian coordinates. (Command: <code>M20 G90 G0</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>Union</code>[<code>float</code>, <code>MirobotCartesians</code>]</dt>
+<dd>(Default value = <code>None</code>) If <code>float</code>, this represents the X-axis position.
+If of type <a title="mirobot.mirobot_status.MirobotCartesians" href="mirobot_status.html#mirobot.mirobot_status.MirobotCartesians"><code>MirobotCartesians</code></a>, then this will be used for all positional values instead.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Y-axis position.</dd>
+<dt><strong><code>z</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Z-axis position.</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Roll angle</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Pitch angle</dd>
+<dt><strong><code>c</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Yaw angle</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def go_to_cartesian_ptp(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Point-to-point move to a position in cartesian coordinates. (Command: `M20 G90 G0`)
+
+    Parameters
+    ----------
+    x : Union[float, MirobotCartesians]
+        (Default value = `None`) If `float`, this represents the X-axis position.
+                                 If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+    y : float
+        (Default value = `None`) Y-axis position.
+    z : float
+        (Default value = `None`) Z-axis position.
+    a : float
+        (Default value = `None`) Orientation angle: Roll angle
+    b : float
+        (Default value = `None`) Orientation angle: Pitch angle
+    c : float
+        (Default value = `None`) Orientation angle: Yaw angle
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+
+    if isinstance(x, MirobotCartesians):
+        inputs = x.asdict()
+
+    else:
+        inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+    return super().go_to_cartesian_ptp(**inputs,
+                                       speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.go_to_slide_rail"><code class="name flex">
+<span>def <span class="ident">go_to_slide_rail</span></span>(<span>self, d, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Go to the slide rail position specified. (Command: <code>M21 G90</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>d</code></strong> :&ensp;<code>float</code></dt>
+<dd>Location of slide rail module.</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def go_to_slide_rail(self, d, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Go to the slide rail position specified. (Command: `M21 G90`)
+
+    Parameters
+    ----------
+    d : float
+        Location of slide rail module.
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+
+    return super().go_to_axis(d=d,
+                              speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.go_to_zero"><code class="name flex">
+<span>def <span class="ident">go_to_zero</span></span>(<span>self, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Send all axes to their respective zero positions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def go_to_zero(self, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Send all axes to their respective zero positions.
+
+    Parameters
+    ----------
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+    return self.go_to_axis(0, 0, 0, 0, 0, 0, 0, speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.increment_axis"><code class="name flex">
+<span>def <span class="ident">increment_axis</span></span>(<span>self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Increment all axes a specified amount in angular coordinates. (Command: <code>M21 G91</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>Union</code>[<code>float</code>, <code>MirobotAngles</code>]</dt>
+<dd>(Default value = <code>None</code>) If <code>float</code>, this represents the angle of axis 1.
+If of type <a title="mirobot.mirobot_status.MirobotAngles" href="mirobot_status.html#mirobot.mirobot_status.MirobotAngles"><code>MirobotAngles</code></a>, then this will be used for all positional values instead.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 2.</dd>
+<dt><strong><code>z</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 3.</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 4.</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 5.</dd>
+<dt><strong><code>c</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Angle of axis 6.</dd>
+<dt><strong><code>d</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Location of slide rail module.</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def increment_axis(self, x=None, y=None, z=None, a=None, b=None, c=None, d=None, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Increment all axes a specified amount in angular coordinates. (Command: `M21 G91`)
+
+    Parameters
+    ----------
+    x : Union[float, MirobotAngles]
+        (Default value = `None`) If `float`, this represents the angle of axis 1.
+                                 If of type `mirobot.mirobot_status.MirobotAngles`, then this will be used for all positional values instead.
+    y : float
+        (Default value = `None`) Angle of axis 2.
+    z : float
+        (Default value = `None`) Angle of axis 3.
+    a : float
+        (Default value = `None`) Angle of axis 4.
+    b : float
+        (Default value = `None`) Angle of axis 5.
+    c : float
+        (Default value = `None`) Angle of axis 6.
+    d : float
+        (Default value = `None`) Location of slide rail module.
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+    if isinstance(x, MirobotAngles):
+        inputs = x.asdict()
+
+    else:
+        inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c, &#39;d&#39;: d}
+
+    return super().increment_axis(**inputs,
+                                  speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.increment_cartesian_lin"><code class="name flex">
+<span>def <span class="ident">increment_cartesian_lin</span></span>(<span>self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Linear increment in cartesian coordinates. (Command: <code>M20 G91 G1</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>Union</code>[<code>float</code>, <code>MirobotCartesians</code>]</dt>
+<dd>(Default value = <code>None</code>) If <code>float</code>, this represents the X-axis position.
+If of type <a title="mirobot.mirobot_status.MirobotCartesians" href="mirobot_status.html#mirobot.mirobot_status.MirobotCartesians"><code>MirobotCartesians</code></a>, then this will be used for all positional values instead.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Y-axis position</dd>
+<dt><strong><code>z</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Z-axis position.</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Roll angle</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Pitch angle</dd>
+<dt><strong><code>c</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Yaw angle</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def increment_cartesian_lin(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Linear increment in cartesian coordinates. (Command: `M20 G91 G1`)
+
+    Parameters
+    ----------
+    x : Union[float, MirobotCartesians]
+        (Default value = `None`) If `float`, this represents the X-axis position.
+                                 If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+    y : float
+        (Default value = `None`) Y-axis position
+    z : float
+        (Default value = `None`) Z-axis position.
+    a : float
+        (Default value = `None`) Orientation angle: Roll angle
+    b : float
+        (Default value = `None`) Orientation angle: Pitch angle
+    c : float
+        (Default value = `None`) Orientation angle: Yaw angle
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+    if isinstance(x, MirobotCartesians):
+        inputs = x.asdict()
+
+    else:
+        inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+    return super().increment_cartesian_lin(**inputs,
+                                           speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.increment_cartesian_ptp"><code class="name flex">
+<span>def <span class="ident">increment_cartesian_ptp</span></span>(<span>self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Point-to-point increment in cartesian coordinates. (Command: <code>M20 G91 G0</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>Union</code>[<code>float</code>, <code>MirobotCartesians</code>]</dt>
+<dd>(Default value = <code>None</code>) If <code>float</code>, this represents the X-axis position.
+If of type <a title="mirobot.mirobot_status.MirobotCartesians" href="mirobot_status.html#mirobot.mirobot_status.MirobotCartesians"><code>MirobotCartesians</code></a>, then this will be used for all positional values instead.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Y-axis position.</dd>
+<dt><strong><code>z</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Z-axis position.</dd>
+<dt><strong><code>a</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Roll angle</dd>
+<dt><strong><code>b</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Pitch angle</dd>
+<dt><strong><code>c</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Default value = <code>None</code>) Orientation angle: Yaw angle</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def increment_cartesian_ptp(self, x=None, y=None, z=None, a=None, b=None, c=None, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Point-to-point increment in cartesian coordinates. (Command: `M20 G91 G0`)
+
+    Parameters
+    ----------
+    x : Union[float, MirobotCartesians]
+        (Default value = `None`) If `float`, this represents the X-axis position.
+                                 If of type `mirobot.mirobot_status.MirobotCartesians`, then this will be used for all positional values instead.
+    y : float
+        (Default value = `None`) Y-axis position.
+    z : float
+        (Default value = `None`) Z-axis position.
+    a : float
+        (Default value = `None`) Orientation angle: Roll angle
+    b : float
+        (Default value = `None`) Orientation angle: Pitch angle
+    c : float
+        (Default value = `None`) Orientation angle: Yaw angle
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+    if isinstance(x, MirobotCartesians):
+        inputs = x.asdict()
+
+    else:
+        inputs = {&#39;x&#39;: x, &#39;y&#39;: y, &#39;z&#39;: z, &#39;a&#39;: a, &#39;b&#39;: b, &#39;c&#39;: c}
+
+    return super().increment_cartesian_ptp(**inputs,
+                                           speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+<dt id="mirobot.mirobot.Mirobot.increment_slide_rail"><code class="name flex">
+<span>def <span class="ident">increment_slide_rail</span></span>(<span>self, d, speed=None, wait=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Increment slide rail position a specified amount. (Command: <code>M21 G91</code>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>d</code></strong> :&ensp;<code>float</code></dt>
+<dd>Location of slide rail module.</dd>
+<dt><strong><code>speed</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Default value = <code>None</code>) The speed in which the Mirobot moves during this operation. (mm/s)</dd>
+<dt><strong><code>wait</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Default value = <code>None</code>) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If <code>None</code>, use class default <code>BaseMirobot.wait</code> instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>msg</code></strong> :&ensp;<code>List</code>[<code>str</code>] or <code>bool</code></dt>
+<dd>If <code>wait</code> is <code>True</code>, then return a list of strings which contains message output.
+If <code>wait</code> is <code>False</code>, then return whether sending the message succeeded.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def increment_slide_rail(self, d, speed=None, wait=None):
+    &#34;&#34;&#34;
+    Increment slide rail position a specified amount. (Command: `M21 G91`)
+
+    Parameters
+    ----------
+    d : float
+        Location of slide rail module.
+    speed : int
+        (Default value = `None`) The speed in which the Mirobot moves during this operation. (mm/s)
+    wait : bool
+        (Default value = `None`) Whether to wait for output to return from the Mirobot before returning from the function. This value determines if the function will block until the operation recieves feedback. If `None`, use class default `BaseMirobot.wait` instead.
+
+    Returns
+    -------
+    msg : List[str] or bool
+        If `wait` is `True`, then return a list of strings which contains message output.
+        If `wait` is `False`, then return whether sending the message succeeded.
+    &#34;&#34;&#34;
+
+    return super().increment_axis(d=d,
+                                  speed=speed, wait=wait)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="mirobot.base_mirobot.BaseMirobot" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot">BaseMirobot</a></b></code>:
+<ul class="hlist">
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.debug" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.debug">debug</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.default_speed" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.default_speed">default_speed</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.device" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.device">device</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.finish_calibration" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.finish_calibration">finish_calibration</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.get_status" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.get_status">get_status</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.home_individual" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.home_individual">home_individual</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.home_simultaneous" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.home_simultaneous">home_simultaneous</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.logger" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.logger">logger</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.pump_pwm_values" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.pump_pwm_values">pump_pwm_values</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.reset_configuration" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.reset_configuration">reset_configuration</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.reset_file" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.reset_file">reset_file</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.send_msg" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.send_msg">send_msg</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.set_air_pump" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.set_air_pump">set_air_pump</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.set_hard_limit" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.set_hard_limit">set_hard_limit</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.set_soft_limit" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.set_soft_limit">set_soft_limit</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.set_valve" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.set_valve">set_valve</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.start_calibration" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.start_calibration">start_calibration</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.status" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.status">status</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.unlock_shaft" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.unlock_shaft">unlock_shaft</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.update_status" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.update_status">update_status</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.valve_pwm_values" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.valve_pwm_values">valve_pwm_values</a></code></li>
+<li><code><a title="mirobot.base_mirobot.BaseMirobot.wait" href="base_mirobot.html#mirobot.base_mirobot.BaseMirobot.wait">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mirobot" href="index.html">mirobot</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="mirobot.mirobot.Mirobot" href="#mirobot.mirobot.Mirobot">Mirobot</a></code></h4>
+<ul class="">
+<li><code><a title="mirobot.mirobot.Mirobot.angle" href="#mirobot.mirobot.Mirobot.angle">angle</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.cartesian" href="#mirobot.mirobot.Mirobot.cartesian">cartesian</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.go_to_axis" href="#mirobot.mirobot.Mirobot.go_to_axis">go_to_axis</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.go_to_cartesian_lin" href="#mirobot.mirobot.Mirobot.go_to_cartesian_lin">go_to_cartesian_lin</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.go_to_cartesian_ptp" href="#mirobot.mirobot.Mirobot.go_to_cartesian_ptp">go_to_cartesian_ptp</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.go_to_slide_rail" href="#mirobot.mirobot.Mirobot.go_to_slide_rail">go_to_slide_rail</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.go_to_zero" href="#mirobot.mirobot.Mirobot.go_to_zero">go_to_zero</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.increment" href="#mirobot.mirobot.Mirobot.increment">increment</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.increment_axis" href="#mirobot.mirobot.Mirobot.increment_axis">increment_axis</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.increment_cartesian_lin" href="#mirobot.mirobot.Mirobot.increment_cartesian_lin">increment_cartesian_lin</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.increment_cartesian_ptp" href="#mirobot.mirobot.Mirobot.increment_cartesian_ptp">increment_cartesian_ptp</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.increment_slide_rail" href="#mirobot.mirobot.Mirobot.increment_slide_rail">increment_slide_rail</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.motion_mode" href="#mirobot.mirobot.Mirobot.motion_mode">motion_mode</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.move" href="#mirobot.mirobot.Mirobot.move">move</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.pump_pwm" href="#mirobot.mirobot.Mirobot.pump_pwm">pump_pwm</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.rail" href="#mirobot.mirobot.Mirobot.rail">rail</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.rover" href="#mirobot.mirobot.Mirobot.rover">rover</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.state" href="#mirobot.mirobot.Mirobot.state">state</a></code></li>
+<li><code><a title="mirobot.mirobot.Mirobot.valve_pwm" href="#mirobot.mirobot.Mirobot.valve_pwm">valve_pwm</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
