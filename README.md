@@ -7,10 +7,12 @@ Here we shall put some information.
 
 ## Code Documentation
 <details>
-  <summary>def get_roi</summary>
-```
-def get_roi(april_tags):
-```
+  <summary>
+  ```
+  def get_roi(april_tags):
+  ```
+  </summary>
+
 Finds the region of interest for where cubes are detected.
 
 The algorithm loops through all the april tags,
