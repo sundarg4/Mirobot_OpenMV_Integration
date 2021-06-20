@@ -7,6 +7,7 @@ Here we shall put some information.
 
 ## Code Documentation
 <details>
+  <summary>def get_roi</summary>
 ```
 def get_roi(april_tags):
 ```
