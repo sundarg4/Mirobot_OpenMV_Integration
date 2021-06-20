@@ -2,7 +2,7 @@
 
 ## Instructions
 <details>
-  <summary>Read more</summary>
+  <summary>Read more\</summary>
 Here we shall put some information.
 
 Dimensions of the bottom plate:
@@ -14,7 +14,7 @@ Dimensions of the bottom plate:
 
 # Code Documentation
 <details>
-  <summary>Read more</summary>
+  <summary>Read more\</summary>
 
 
 ```
