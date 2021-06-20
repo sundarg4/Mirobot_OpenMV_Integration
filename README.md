@@ -8,9 +8,11 @@ Here we shall put some information.
 ## Code Documentation
 <details>
   <summary>
+    <p>
   ```
   def get_roi(april_tags):
   ```
+    </p>
   </summary>
 
 Finds the region of interest for where cubes are detected.
