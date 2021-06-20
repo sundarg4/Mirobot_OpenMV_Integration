@@ -1,18 +1,24 @@
 # Small image processing library for WLKATA Mirobot using OpenMV.
 
-
 ## Instructions
+<details>
+  <summary>Read more</summary>
+  </br>
+  
 Here we shall put some information.
 
-Dimensions:
+Dimensions of the bottom plate:
 
-![ScreenShot](dimensions.png)
+![Dimensions](https://github.com/imageprocessing-hiof/image-processing/blob/main/images/dimensions.png)
 
-
-
+</details>
 
 
 # Code Documentation
+<details>
+  <summary>Read more</summary>
+
+  </br>
 
 ```
 def calibration():
@@ -86,5 +92,5 @@ def draw_blobs(blobs):
 Draws a rectangle around the minimum area of each blob.
 Also draws a cross at cx,cy of each blob.
 
-
+</details>
 
