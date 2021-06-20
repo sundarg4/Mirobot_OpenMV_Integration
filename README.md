@@ -4,6 +4,12 @@
 ## Instructions
 Here we shall put some information.
 
+Dimensions:
+
+![ScreenShot](dimensions.png)
+
+
+
 
 
 # Code Documentation
