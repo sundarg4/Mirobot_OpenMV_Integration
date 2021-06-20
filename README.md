@@ -4,6 +4,7 @@
 ## Instructions
 Here we shall put some information.
 
+Dimensions of the bottom plate:
 
 ![Dimensions](https://github.com/imageprocessing-hiof/image-processing/blob/main/images/dimensions.png)
 
