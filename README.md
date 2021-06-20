@@ -6,7 +6,7 @@ Here we shall put some information.
 
 Dimensions:
 
-![ScreenShot](dimensions.png)
+![ScreenShot](../images/dimensions.png)
 
 
 
