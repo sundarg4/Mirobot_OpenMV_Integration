@@ -6,6 +6,7 @@ Here we shall put some information.
 
 
 ## Code Documentation
+<details>
 ```
 def get_roi(april_tags):
 ```
@@ -33,6 +34,8 @@ x_min and y_min. And also the width and height of the ROI. (x_min, y_min, w, h)
 Importnat to remember is that ROI is found using QQVGA so
 there is neccessary to call the function upscale_QQVGA_to_QVGA
 on theese coordinates before using them to find blobs.
+
+</details>
 
 ```
 def mask_april_tags(april_tags):
