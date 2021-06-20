@@ -4,9 +4,8 @@
 ## Instructions
 Here we shall put some information.
 
-Dimensions:
 
-![ScreenShot](../images/dimensions.png)
+![Dimensions](https://github.com/imageprocessing-hiof/image-processing/blob/main/images/dimensions.png)
 
 
 
