@@ -6,9 +6,7 @@ Here we shall put some information.
 
 
 
-<details>
-  <summary>## Code Documentation</summary>
-
+# Code Documentation
 ```
 def get_roi(april_tags):
 ```
@@ -37,11 +35,13 @@ Importnat to remember is that ROI is found using QQVGA so
 there is neccessary to call the function upscale_QQVGA_to_QVGA
 on theese coordinates before using them to find blobs.
 
-</details>
 
 ```
 def mask_april_tags(april_tags):
 ```
+Using the inbuilt method to find the rectangle area of each april tag.
+Then upscaling those coordinates from QQVGA to QVGA, and finally
+drawing a black rectangle over them.
 
 
 
