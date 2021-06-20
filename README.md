@@ -13,6 +13,9 @@ Dimensions of the bottom plate:
 
 
 # Code Documentation
+<details>
+  <summary>Read more</summary>
+
 
 ```
 def calibration():
@@ -86,5 +89,5 @@ def draw_blobs(blobs):
 Draws a rectangle around the minimum area of each blob.
 Also draws a cross at cx,cy of each blob.
 
-
+</details>
 
