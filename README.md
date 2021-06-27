@@ -30,7 +30,7 @@ in the dictionary.
 Returns a the dictionary of april tags and a calibration_result,
 True if all four tags where found, False if not.
 
-```
+```python
 def get_roi(april_tags):
 ```
 Finds the region of interest for where cubes are detected.
@@ -60,19 +60,19 @@ there is neccessary to call the function upscale_QQVGA_to_QVGA
 on theese coordinates before using them to find blobs.
 
 
-```
+```python
 def mask_april_tags(april_tags):
 ```
 Using the inbuilt method to find the rectangle area of each april tag.
 Then upscaling those coordinates from QQVGA to QVGA, and finally
 drawing a black rectangle over them.
 
-```
+```python
 def upscale_QQVGA_to_QVGA(x,y,w,h):
 ```
 returns coordinates in QQVGA.
 
-```
+```python
 def find_blobs(x,y,w,h):
 ```
 Returns a list of blobs separated by color. 
@@ -81,12 +81,12 @@ the blobs found of that color.
 
 (white_blobs, red_blobs, green_blobs, blue_blobs)
 
-```
+```python
 def find_len_of_blobs(blobs):
 ```
 Returns the length of all lists returned from find_blobs().
 
-```
+```python
 def get_blob_data(blobs, data_dict)
 ```
 Parameters: The list of blobs returned from the fins_blobs function,
@@ -114,7 +114,7 @@ Finally all data is stored to the dictionary like so,
 
 data_dict[total_count] = (color, cx, cy, angle_of_rotation, is_cuboid).
 
-```
+```python
 def get_color(color_code):
 ```
 Translates the color code into its string representation.
@@ -123,7 +123,7 @@ Translates the color code into its string representation.
 2 = green,
 3 = bluee
 
-```
+```python
 def is_cuboid_or_rectangle(blob):
 ```
 Parameter: A blob.
@@ -137,7 +137,7 @@ This threshold value will be different if the camera mount is adjusted, so that 
 Cube: x * x cm
 Rectangle x * y cm
 
-```
+```python
 def get_angle_of_rotation_tan(blob, prev_degree):
 ```
 Parameters: A blob, The previous angle in degrees of that blob.
@@ -152,7 +152,7 @@ If there has been no previous degree than this will be equal to -1 and will be r
 If there already is a previous anlge, then an exponetial filter will be applied before returning the new angle.
 
 
-```
+```python
 def draw_blobs(blobs):
 ```
 Draws a rectangle around the minimum area of each blob.
