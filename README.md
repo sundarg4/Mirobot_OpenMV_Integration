@@ -87,7 +87,7 @@ def find_len_of_blobs(blobs):
 Returns the length of all lists returned from find_blobs().
 
 ```python
-def get_blob_data(blobs, data_dict)
+def get_blob_data(blobs, data_dict):
 ```
 Parameters: The list of blobs returned from the fins_blobs function,
             and the data_dict containing data about position, orientation and 
