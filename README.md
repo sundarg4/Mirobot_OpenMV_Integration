@@ -23,9 +23,6 @@ Dimensions of the bottom plate:
 ```python
 def calibration():
 ```
-
-<details>
-  <summary>Source code</summary>
   ```python
   def calibration():
     # Initialize Apriltags dictionary
@@ -45,9 +42,8 @@ def calibration():
         return april_tags, True
     else:
         return april_tags, False
-  ```
-  
-</details>
+        ```
+
 
 Initializes the dictionary of april tags used throughout the program.
 Runs a loop 25 times and make a picture and store the found april tags 
