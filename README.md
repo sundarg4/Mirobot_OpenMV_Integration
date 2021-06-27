@@ -20,7 +20,7 @@ Dimensions of the bottom plate:
 
   </br>
 
-```
+```python
 def calibration():
 ```
 Initializes the dictionary of april tags used throughout the program.
