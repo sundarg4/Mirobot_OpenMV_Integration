@@ -87,6 +87,40 @@ def find_len_of_blobs(blobs):
 Returns the length of all lists returned from find_blobs().
 
 ```
+def get_blob_data(blobs, data_dict)
+```
+Parameters: The list of blobs returned from the fins_blobs function,
+            and the data_dict containing data about position, orientation and 
+            color of each blob.
+            
+Returns:    The data dictionary containg blob data.
+
+
+Loops through the list of blob lists with the enumeration function of python, and so gaining
+access to both the counter and the list.
+
+Further loops through each list in the same manner and gains access to both counter and blob.
+
+Gets the color by sending the "color_code" (counter from the first loop) to the function get_color().
+
+The variable total count is used to keep an unique identifier for each blob to use as key while adding/updating
+the dictionary.
+
+The angle of rotation is found by calling the function get_angle_of_rotation_tan()
+
+If the object is a cuboid or a rectangle is found by calling is_cuboid_or_rectangle()
+
+Finally all data is stored to the dictionary like so,
+
+data_dict[total_count] = (color, cx, cy, angle_of_rotation, is_cuboid).
+
+
+```
+def get_angle_of_rotation_tan(blob, prev_degree):
+```
+
+
+```
 def draw_blobs(blobs):
 ```
 Draws a rectangle around the minimum area of each blob.
