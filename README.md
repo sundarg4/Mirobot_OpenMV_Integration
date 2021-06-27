@@ -140,6 +140,16 @@ Rectangle x * y cm
 ```
 def get_angle_of_rotation_tan(blob, prev_degree):
 ```
+Parameters: A blob, The previous angle in degrees of that blob.
+
+Returns:    The new angle.
+
+By iterating through the corners of the minimum area the top corner and the right corner are detected.
+The angle is then found by using the atan2 function, which returns in radians. This angle will then be converted to degrees. </br>
+
+If there has been no previous degree than this will be equal to -1 and will be replaced by the angle in degrees.
+
+If there already is a previous anlge, then an exponetial filter will be applied before returning the new angle.
 
 
 ```
