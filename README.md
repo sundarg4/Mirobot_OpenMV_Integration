@@ -114,6 +114,28 @@ Finally all data is stored to the dictionary like so,
 
 data_dict[total_count] = (color, cx, cy, angle_of_rotation, is_cuboid).
 
+```
+def get_color(color_code):
+```
+Translates the color code into its string representation.
+0 = white,
+1 = red,
+2 = green,
+3 = bluee
+
+```
+def is_cuboid_or_rectangle(blob):
+```
+Parameter: A blob.
+
+Returns:   True if its a rectangle, False if its a cube.
+
+Checks how big the area of a blob is. Through experimentation we foud that 750 was a good value. Thus if the blob has an area of more than 750 it will be considered a rectangle, and if its less than 750 it will be considered a cuboid. 
+
+This threshold value will be different if the camera mount is adjusted, so that the distance from the camera to the working space is different. Or if the objects used are of different diemensions than the ones we used writing this code.
+
+Cube: x * x cm
+Rectangle x * y cm
 
 ```
 def get_angle_of_rotation_tan(blob, prev_degree):
