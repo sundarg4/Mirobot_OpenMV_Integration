@@ -26,6 +26,26 @@ def calibration():
 
 <details>
   <summary>Source code</summary>
+  
+  def calibration():
+    # Initialize Apriltags dictionary
+    april_tags = {}
+    # Taking 25 samples to improve the chances of finding apriltags
+    for iter in range(25):
+        img = sensor.snapshot().lens_corr(strength = 1.8, zoom = 1.0)
+
+        #finding all the April tags and adding it in the april_tags dictionary with id
+        for tag in img.find_apriltags(families=tag_families):
+            tag_id = tag.id()
+            april_tags.update({tag_id:tag})
+
+    # if we detect all the 4 april tags return true, else false
+    if(len(april_tags)==4):
+        #print(april_tags)
+        return april_tags, True
+    else:
+        return april_tags, False
+  
 </details>
 
 Initializes the dictionary of april tags used throughout the program.
