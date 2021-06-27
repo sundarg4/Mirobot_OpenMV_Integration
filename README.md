@@ -26,7 +26,7 @@ def calibration():
 
 <details>
   <summary>Source code</summary>
-  
+  ```python
   def calibration():
     # Initialize Apriltags dictionary
     april_tags = {}
@@ -45,6 +45,7 @@ def calibration():
         return april_tags, True
     else:
         return april_tags, False
+  ```
   
 </details>
 
