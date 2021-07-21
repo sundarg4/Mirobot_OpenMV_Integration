@@ -98,20 +98,25 @@ class remote_control():
                         apriltag_str = string_element.split("apriltag")[1]
                         self.april_tags = ast.literal_eval(apriltag_str)
             else:
-                print("No data broooo")
+                print("No data...")
                 #return None
 
         except:
             traceback.print_exc(file=sys.stdout)
-            print("No data this time")
 
     def update_data(self, data):
         '''
             Called from exe_get_data().
-
             Updates the data lists (prev_cx, prev_cy, area, prev_rotation_angle, color)
-
             Making use of an exponential filter the data is beining normalized.
+
+            Parameters
+            ----------
+                data (list) : list containing blob data
+
+            Returns
+            ----------
+                None
         '''
         w=0.10
 
@@ -272,7 +277,18 @@ class remote_control():
             return robot_x, robot_y       
         
     def rescale_x(self, val, tag_corners):
-        '''Translates the image x coordinate into robot x coordinate.'''
+        '''
+            Translates the image x coordinate into robot x coordinate.
+        
+            Parameters
+            ----------
+                val (float) : the value to convert
+                tag_corners (list) : list of the april tag corners
+            
+            Returns
+            ----------
+                (int) The transformed coordinate.
+        '''
         out_min = -129 #-125 #-129 ##-144
         out_max = 123 #127 # 123 ##138
 
@@ -285,7 +301,18 @@ class remote_control():
             raise ZeroDivisionError
           
     def rescale_y(self, val, tag_corners):
-        '''Translate the image y coordinate into robot y coordinate.'''
+        '''
+            Translate the image y coordinate into robot y coordinate.
+
+            Parameters
+            ----------
+                val (float) : the value to convert
+                tag_corners (list) : list of the april tag corners
+            
+            Returns
+            ----------
+                (int) The transformed coordinate.           
+        '''
         out_min = 104 #100
         out_max = 294 #290
         
@@ -349,17 +376,22 @@ class remote_control():
         if port:
             with Mirobot(portname = port, debug=True) as m:
                 m.home_simultaneous()
-                m.send_msg('M3S1000')
-                time.sleep(2)
-                m.send_msg('M3S0')
-                time.sleep(2)
         else:
             print("Must spesify a valid port.")
   
     def go_to_resting_point(self, port=None, speed=750):
         '''
-          Moves the Mirobot to its resting point. 
+          Moves the Mirobot to its resting point.
+          Needed for the OpenMV camera to be able to calibrate.
+
           (cx = 133, cy = 0, cz = 80, rx = 0, ry = 0, rz = 0)
+
+          Parameters
+          ----------
+                port (str) : The protname connected to the robot being operated on.
+
+                speed (int) : The speed of movement of the robot. Ranges from 0 - 2000.
+                              Not recommended to run below 500. Default set to 750.
         '''
         if port:
             with Mirobot(portname = port, debug=True) as m:
@@ -384,7 +416,7 @@ class remote_control():
 
                 port (str) : The protname connected to the robot being operated on.
 
-                speed (int) : The speed of movement for the robot. Ranges from 0 - 2000.
+                speed (int) : The speed of movement of the robot. Ranges from 0 - 2000.
                               Not recommended to run below 500. Default set to 750.
                 
                 is_cube (bool) : True if a cube, false if a rectangle.
@@ -403,9 +435,11 @@ class remote_control():
                     m.unlock_shaft()              
                     time.sleep(1)
                     m.go_to_cartesian_lin(x,y,z,rx,ry,rz, speed)
+                    # Suction cup on
                     m.send_msg('M3S1000')
                     time.sleep(1)
                     m.go_to_zero()
+                    # Suction cup off
                     m.send_msg('M3S0')
                     time.sleep(1)
                 except KeyboardInterrupt:
@@ -455,7 +489,13 @@ class remote_control():
             self.exe_get_data(interface)    
 
     def clear_data_list(self):
-        '''Clears the data_list before next call'''
+        '''
+            Clears the data_list before next call
+
+            Returns
+            ----------
+                None
+        '''
         self.data_list.clear()
 
     def find_mode(self, sample):
