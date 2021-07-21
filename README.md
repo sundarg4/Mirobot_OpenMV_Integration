@@ -32,7 +32,9 @@ https://github.com/openmv/openmv/tree/master/tools/rpc
 </br></br>
 pyserial : dependency from rpc
 </br>
-`pip install pyserial`
+<div style="background:grey">
+pip install pyserial
+</div>
 </br></br>
 mirobot-py
 </br>
