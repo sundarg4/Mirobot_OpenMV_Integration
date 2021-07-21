@@ -13,10 +13,10 @@ Dimensions of the bottom plate:
 
 </details>
 
-`pip install pyserial`
 
 ## Installation and dependencies
-</br>
+
+
 OpenMV library: needed for the remote_device.py
 </br>
 https://openmv.io/pages/download
@@ -40,7 +40,7 @@ mirobot-py
 
 
 
-# Code Documentation
+## Code Documentation
 https://github.com/openmv/openmv/blob/master/tools/rpc/README.md
 <details>
   <summary>Read more</summary>
