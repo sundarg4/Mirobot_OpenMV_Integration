@@ -1,17 +1,13 @@
 # Small image processing library for WLKATA Mirobot using OpenMV.
 
 ## Instructions
-<details>
-  <summary>Read more</summary>
-  </br>
-  
 
-Dimensions of the bottom plate:
-
-![Dimensions](https://github.com/imageprocessing-hiof/image-processing/blob/main/images/dimensions.png)
+The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
+Source code is located in /home/mirobot. </br></br>
+Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
+`cd mirobot && source ./venv/bin/activate
 
 
-</details>
 
 
 ## Installation and dependencies
