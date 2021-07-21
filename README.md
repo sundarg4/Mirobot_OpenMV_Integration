@@ -5,16 +5,39 @@
   <summary>Read more</summary>
   </br>
   
-Here we shall put some information.
 
 Dimensions of the bottom plate:
 
 ![Dimensions](https://github.com/imageprocessing-hiof/image-processing/blob/main/images/dimensions.png)
 
+
+</details>
+
+## Installation and dependencies
+<details>
+    <summary>Dependencies</summary>
+    </br>
+    OpenMV library: needed for the remote_device.py
+    https://openmv.io/pages/download
+    </br>
+    rpc : part of the openMV library, needed for remote procedure calls.
+    Needs to be on both the remote device and the raspberry pi. 
+    Just copy the file rpc.py into the same folder as your scripts,
+    https://github.com/openmv/openmv/tree/master/tools/rpc
+    </br>
+    pyserial : dependency from rpc
+    `pip install pyserial`
+    </br>
+    mirobot-py
+    `pip install mirobot-py`
+    </br>
+    
+
 </details>
 
 
 # Code Documentation
+https://github.com/openmv/openmv/blob/master/tools/rpc/README.md
 <details>
   <summary>Read more</summary>
 
