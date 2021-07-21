@@ -39,11 +39,14 @@ mirobot-py
 ast v.: </br>
 https://github.com/python/cpython/blob/main/Lib/ast.py 
 </br></br>
-Numpy:
+Numpy: </br>
 `pip install numpy`
 </br></br>
-Scipy:
+Scipy: </br>
 ` pip install scipy`
+</br></br>
+plotille : For plotting in terminal </br>
+`pip install plotille`
 </br></br>
 
 
