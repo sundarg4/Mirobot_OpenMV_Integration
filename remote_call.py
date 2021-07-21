@@ -23,6 +23,20 @@ class remote_control():
         portname for mirobot one
     MIROBOT_TWO_PORT : str
         portname for mirobot two
+    window_size : int
+        used for initalizing arrays of correct size.
+    prev_cx : list (float)
+        List containing cx values for all readings, used for stabalizing data.
+    prev_cy : list (float)
+        List containing cy values for all readings, used for stabalizing data.
+    prev_area : list (int)
+        List containing blob area values for all readings, used for stabalizing data.
+    prev_rotation_angle : list (float)
+        List containing blob rotation for all readings, used for stabalizing data.
+    color : list (string)
+        List containing string representation of all the blobs.
+    april_tags : dict
+        Dictionary containing data about the april tags, recieved by the OpenMV.
     Methods:
     --------
     To be continued
@@ -44,22 +58,37 @@ class remote_control():
     def get_camera(self, port):
         '''Returns the rpc interface representing the openMV camera connected to the port.
         
-                Paramters:
+                Paramters
+                ----------
                     port (str): a string representation of the port connected to the camera
                     
-                Returns:
+                Returns
+                ----------
                     interface (rpc.rpc_usb_vcp_master): Interface to interact with openMV
         '''
         return rpc.rpc_usb_vcp_master(port)
 
     def exe_get_data(self, interface):
+        '''
+            Called from fill_data().
+            Makes a remote call to the OpenMV to get data from the image processing.
+            Stores the april tags data in the and updates the list of values.
+
+            Parameters
+            ----------
+                interface (rpc.rpc_usb_vcp_master): Interface to interact with openMV
+
+            Returns
+            ----------
+                None
+            
+        '''
         try:
             result = interface.call("get_data",  send_timeout=10000, recv_timeout=10000) 
 
             if result is not None and len(result):
                 e = struct.unpack('{}s'.format(len(result)), result)
-                #data = ast.literal_eval(e)
-                #print(data)     
+    
                 for element in e:
                     string_element = str(bytes(element).decode("utf8"))
                     if "apriltag" in string_element:
@@ -77,6 +106,13 @@ class remote_control():
             print("No data this time")
 
     def update_data(self, data):
+        '''
+            Called from exe_get_data().
+
+            Updates the data lists (prev_cx, prev_cy, area, prev_rotation_angle, color)
+
+            Making use of an exponential filter the data is beining normalized.
+        '''
         w=0.10
 
         window_size = len(data)
@@ -113,6 +149,22 @@ class remote_control():
                     self.color.append(element)
                
     def order_points(self, pts):
+        '''
+            Sorts the corners in a (top left, top right, bottom right, bottom left) order.
+
+            This function was borrowed from pyimagesearch.com 
+            https://www.pyimagesearch.com/2016/03/21/ordering-coordinates-clockwise-with-python-and-opencv/
+
+
+            Parameters
+            ----------
+                pts : tuple of (x,y) coordinates to be sorted.
+            
+            Returns
+            ----------
+                sorted list of corners : [top left, top right, bottom right, bottom left]
+
+        '''
 	    # sort the points based on their x-coordinates
 	    xSorted = pts[np.argsort(pts[:, 0]), :]
 	    # grab the left-most and right-most points from the sorted
@@ -136,16 +188,25 @@ class remote_control():
 	    return np.array([tl, tr, br, bl], dtype="float32")
  
     def get_angle_of_rotation(self, corners):
+        '''
+            Calculates the angle of rotation for a blob in degrees,
+
+            Parameters
+            ----------
+                corners : list of tuples of (x,y) coordinates.
+            
+            Returns
+            ----------
+                degrees : the rotation of the blob in degrees.
+        '''
         ctx,cty = corners[0]
         crx,cry = corners[1] 
 
         angle = math.atan2(cry - cty, crx - ctx)
-        #angle = math.atan2(cty - cry, ctx - crx)
         degrees = abs(angle * (180 / math.pi) )
-        #print(str(degrees))
         return degrees
     
-    def rescale(self, x_camera, y_camera, tag_corners, offset_positive_x=0, offset_positive_y=0, offset_negative_x=0, offset_negative_y=0):
+    def rescale(self, x_camera, y_camera, tag_corners, offset_positive_x=20, offset_positive_y=0, offset_negative_x=20, offset_negative_y=5):
         '''
             Transforms the coordinates from camera frame to robot frame.
             Camera coordinate system and robot coordinate system is reversed,
@@ -156,29 +217,62 @@ class remote_control():
             that there is a need to calibrate the offset for positive roboy_y and negative
             robot_y differently.
 
+            We have calibrated the offset to work for a major part of the working space. 
+            But for perfection theese values need to be tuned.
+
+            Standard values are:
+                offset_positive_x = 20
+                offset_positive_y = 0
+                offset_negative_x = 20
+                offset_negative_y =5
+
             Parameters
+            ----------
                 x_camera (float) : The cameras x position
                 y_camera (float) : The cameras y position
+                tag_corners : The corners of the april tags, used to transform between image and robot frame.
+
+                Positive offset used for blobs found in the positive (left) side of the robot x-axis.
+                offset_positive_x (int) : Desired offset for the x-axis of the robot.
+                offset_positive_y (int) : Desired offset for the y-axis of the robot.
+
+                Negative offset used for blobs found in the negative (right) side of the robot y-axis.
+                offset_negative_x (int) : Desired offset for the x-axis of the robot.
+                offset_negative_y (int) : Desired offset for the y-axis of the robot.
+            
+            Returns
+            ----------
+                x, y (float) : translated coordinates in the robot frame.
+
         '''
         robot_y = self.rescale_x(x_camera, tag_corners)
         robot_x = self.rescale_y(y_camera, tag_corners)
         
-        # Correction of offset
-        #if robot_y < 0:
-        #    robot_y = robot_y + 5
-        #    robot_x = robot_x + 20
-        #else:
-        #    robot_x = robot_x + 20
-
-        if robot_y < 0:
-            robot_y = robot_y + offset_negative_y
-            robot_x = robot_x + offset_negative_x
-        else:
-            robot_x = robot_x + offset_positive_x
-        
-        return robot_x, robot_y
+        if (offset_positive_x == 0 and offset_positive_y == 0) or (offset_negative_x == 0 and offset_negative_y == 0):
+            return robot_x, robot_y
+        elif robot_y < 0:
+            if offset_negative_x < 0:
+                robot_x = robot_x - offset_negative_x
+            elif offset_negative_x > 0:
+                robot_x = robot_x + offset_negative_x           
+            if offset_negative_y < 0:
+                robot_y = robot_y - offset_negative_y
+            elif offset_negative_y > 0:
+                robot_y = robot_y + offset_negative_y          
+            return robot_x, robot_y
+        elif robot_y > 0:
+            if offset_positive_x < 0:
+                robot_x = robot_x - offset_positive_x
+            elif offset_negative_x > 0:
+                robot_x = robot_x + offset_positive_x           
+            if offset_negative_y < 0:
+                robot_y = robot_y - offset_positive_y
+            elif offset_negative_y > 0:
+                robot_y = robot_y + offset_positive_y          
+            return robot_x, robot_y       
         
     def rescale_x(self, val, tag_corners):
+        '''Translates the image x coordinate into robot x coordinate.'''
         out_min = -129 #-125 #-129 ##-144
         out_max = 123 #127 # 123 ##138
 
@@ -191,6 +285,7 @@ class remote_control():
             raise ZeroDivisionError
           
     def rescale_y(self, val, tag_corners):
+        '''Translate the image y coordinate into robot y coordinate.'''
         out_min = 104 #100
         out_max = 294 #290
         
@@ -203,6 +298,13 @@ class remote_control():
             raise ZeroDivisionError
  
     def get_tag_corners(self):
+        ''' 
+            Get cx and cy for all april tags and store them in a list
+
+            Returns
+            ----------
+                A sorted list of the april tag corners.
+        '''
         center_list = []
         for tag_id,tag in self.april_tags.items():
             center_list.append((tag.get('cx'),tag.get('cy')))
@@ -210,16 +312,15 @@ class remote_control():
         # The four corners of a april tag
         tag_corners = (self.order_points(np.array(center_list))).tolist()
         return tag_corners
-
-    def draw_blob_map(self, x,y):
-        plt.grid(True)
-        axes = plt.gca()
-        axes.set_xlim([0,250])
-        axes.set_ylim([0,350])
-        plt.scatter(x,y)
-        plt.show()
         
     def draw(self, cx_list, cy_list):
+        '''
+            Plots the blocks into a coordinate system in the terminal.
+
+            Returns
+            ----------
+                None
+        '''
         cx = np.array(cx_list)
         cy = []
 
@@ -247,7 +348,6 @@ class remote_control():
         '''
         if port:
             with Mirobot(portname = port, debug=True) as m:
-                #m.set_speed(750)
                 m.home_simultaneous()
                 m.send_msg('M3S1000')
                 time.sleep(2)
@@ -358,17 +458,15 @@ class remote_control():
         '''Clears the data_list before next call'''
         self.data_list.clear()
 
-    
-
-    def find_mode(sample):
+    def find_mode(self, sample):
         #c = Counter(sample)
         return max(set(sample), key=sample.count)
 
-    def find_mean(sample):
+    def find_mean(self, sample):
         #c = Counter(sample)
         return int(sum(sample) / len(sample))
  
-    def select_nth(n, items):
+    def select_nth(self, n, items):
         pivot = items[0]
 
         lesser = [item for item in items if item < pivot]
@@ -384,7 +482,7 @@ class remote_control():
         greater = [item for item in items if item > pivot]
         return select_nth(n, greater)
 
-    def median(items):
+    def median(self, items):
         if len(items) % 2:
             return select_nth(len(items)//2, items)
 
