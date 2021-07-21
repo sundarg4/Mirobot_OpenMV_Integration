@@ -17,7 +17,7 @@ This project mainly focuses on working directly with the raspberry pi to communi
 The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
 Source code is located in /home/mirobot. </br></br>
 Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
-`cd mirobot && source ./venv/bin/activate` </br></br>
+`cd mirobot/ && source ./venv/bin/activate` </br></br>
 
 Dependencies </br>
 OpenMV library: needed for the remote_device.py
