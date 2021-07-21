@@ -40,7 +40,10 @@ ast v.: </br>
 https://github.com/python/cpython/blob/main/Lib/ast.py 
 </br></br>
 Numpy:
-´ pip install numpy`
+`pip install numpy`
+</br></br>
+Scipy:
+` pip install scipy`
 </br></br>
 
 
