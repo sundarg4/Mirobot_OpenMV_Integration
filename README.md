@@ -4,21 +4,18 @@ OpenMV : https://openmv.io/ </br><br>
 WLKATA Mirobot : https://www.wlkata.com/ </br></br>
 
 This API is split into to source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
-OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls </br>
+OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
 to both the OpenMV and the Mirobot. </br></br>
-
-## Instructions
-
-The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
-Source code is located in /home/mirobot. </br></br>
-Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
-`cd mirobot && source ./venv/bin/activate`
-
-
 
 
 ## Installation and dependencies
 
+The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
+Source code is located in /home/mirobot. </br></br>
+Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
+`cd mirobot && source ./venv/bin/activate` </br></br>
+
+Dependencies </br>
 OpenMV library: needed for the remote_device.py
 </br>
 https://openmv.io/pages/download
