@@ -16,7 +16,8 @@ Dimensions of the bottom plate:
 
 ## Installation and dependencies
 
-
+<details>
+  <summary>Dependencies</summary>
 OpenMV library: needed for the remote_device.py
 </br>
 https://openmv.io/pages/download
@@ -37,7 +38,7 @@ mirobot-py
 </br>
 `pip install mirobot-py`
 </br></br>
-
+</details>
 
 
 ## Code Documentation
