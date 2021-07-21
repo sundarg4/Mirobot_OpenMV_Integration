@@ -1,11 +1,14 @@
-# Small image processing library for WLKATA Mirobot using OpenMV.
+# Small API for working with the WLKATA Mirobot and the OpenMV camera module,
+
+OpenMV : https://openmv.io/ </br><br>
+WLKATA Mirobot : https://www.wlkata.com/ </br></br>
 
 ## Instructions
 
 The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
 Source code is located in /home/mirobot. </br></br>
 Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
-`cd mirobot && source ./venv/bin/activate
+`cd mirobot && source ./venv/bin/activate`
 
 
 
