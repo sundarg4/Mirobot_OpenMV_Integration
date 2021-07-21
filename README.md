@@ -52,7 +52,7 @@ plotille : For plotting in terminal </br>
 </br></br>
 
 
-## Code Documentation
+## Documentation
 Docs for openMV RPC: </br>
 https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br>
 
