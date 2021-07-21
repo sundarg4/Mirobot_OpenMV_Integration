@@ -13,6 +13,7 @@ Dimensions of the bottom plate:
 
 </details>
 
+`pip install pyserial`
 
 ## Installation and dependencies
 </br>
