@@ -64,7 +64,10 @@ The official mirobot manual: </br>
 https://lin-nice.github.io/mirobot_gitbook_en/ </br>
 
 The official python mirobot API: </br>
-https://rirze.github.io/mirobot-py/mirobot/index.html </br></br>
+https://rirze.github.io/mirobot-py/mirobot/index.html </br>
+
+Github for mirobot-py: </br>
+https://github.com/wlkata/mirobot-py </br></br>
 
 ## This API
 
