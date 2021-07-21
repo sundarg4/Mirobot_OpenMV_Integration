@@ -4,7 +4,7 @@ This API is split into to source files, `remote_device.py` which should be flash
 OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
 to both the OpenMV and the Mirobot. </br></br>
 
-OpenMV : https://openmv.io/ </br><br>
+OpenMV : https://openmv.io/ </br>
 WLKATA Mirobot : https://www.wlkata.com/ </br></br>
 
 
@@ -52,17 +52,15 @@ plotille : For plotting in terminal </br>
 
 ## Code Documentation
 Docs for openMV RPC: </br>
-https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br></br>
+https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br>
 
 The official mirobot manual: </br>
-https://lin-nice.github.io/mirobot_gitbook_en/ </br></br>
+https://lin-nice.github.io/mirobot_gitbook_en/ </br>
 
 The official python mirobot API: </br>
 https://rirze.github.io/mirobot-py/mirobot/index.html </br></br>
-<details>
-  <summary>Read more</summary>
 
-  </br>
+## This API
 
 ```python
 def calibration():
@@ -201,6 +199,4 @@ def draw_blobs(blobs):
 ```
 Draws a rectangle around the minimum area of each blob.
 Also draws a cross at cx,cy of each blob.
-
-</details>
 
