@@ -15,27 +15,27 @@ Dimensions of the bottom plate:
 
 
 ## Installation and dependencies
-  </br>
-  OpenMV library: needed for the remote_device.py
-  </br>
-  https://openmv.io/pages/download
-  </br></br>
-  rpc : part of the openMV library, needed for remote procedure calls.
-  </br>
-  Needs to be on both the remote device and the raspberry pi. 
-  </br>
-  Just copy the file rpc.py into the same folder as your scripts,
-  </br>
-  https://github.com/openmv/openmv/tree/master/tools/rpc
-  </br></br>
-  pyserial : dependency from rpc
-  </br>
-  `pip install pyserial`
-  </br></br>
-  mirobot-py
-  </br>
-  `pip install mirobot-py`
-  </br></br>
+</br>
+OpenMV library: needed for the remote_device.py
+</br>
+https://openmv.io/pages/download
+</br></br>
+rpc : part of the openMV library, needed for remote procedure calls.
+</br>
+Needs to be on both the remote device and the raspberry pi. 
+</br>
+Just copy the file rpc.py into the same folder as your scripts,
+</br>
+https://github.com/openmv/openmv/tree/master/tools/rpc
+</br></br>
+pyserial : dependency from rpc
+</br>
+`pip install pyserial`
+</br></br>
+mirobot-py
+</br>
+`pip install mirobot-py`
+</br></br>
 
 
 
