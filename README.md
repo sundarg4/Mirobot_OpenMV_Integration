@@ -2,7 +2,9 @@
 
 This API is split into to source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
 OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
-to both the OpenMV and the Mirobot. </br></br>
+to both the OpenMV and the Mirobot. </br>
+
+`test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
 
 OpenMV : https://openmv.io/ </br>
 WLKATA Mirobot : https://www.wlkata.com/ </br></br>
