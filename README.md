@@ -16,8 +16,6 @@ Dimensions of the bottom plate:
 
 ## Installation and dependencies
 
-<details>
-  <summary>Dependencies</summary>
 OpenMV library: needed for the remote_device.py
 </br>
 https://openmv.io/pages/download
@@ -32,15 +30,12 @@ https://github.com/openmv/openmv/tree/master/tools/rpc
 </br></br>
 pyserial : dependency from rpc
 </br>
-<div style="background:grey">
-pip install pyserial
-</div>
+`pip install pyserial`
 </br></br>
 mirobot-py
 </br>
 `pip install mirobot-py`
 </br></br>
-</details>
 
 
 ## Code Documentation
