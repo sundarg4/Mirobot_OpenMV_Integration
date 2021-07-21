@@ -31,7 +31,9 @@ Dimensions of the bottom plate:
     </br>
     pyserial : dependency from rpc
     </br>
-    `pip install pyserial`
+    ```
+    pip install pyserial
+    ```
     </br>
     mirobot-py
     </br>
