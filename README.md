@@ -1,14 +1,16 @@
 # Small API for working with the WLKATA Mirobot and the OpenMV camera module,
 
-OpenMV : https://openmv.io/ </br><br>
-WLKATA Mirobot : https://www.wlkata.com/ </br></br>
-
 This API is split into to source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
 OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
 to both the OpenMV and the Mirobot. </br></br>
 
+OpenMV : https://openmv.io/ </br><br>
+WLKATA Mirobot : https://www.wlkata.com/ </br></br>
+
 
 ## Installation and dependencies
+
+This project mainly focuses on working directly with the raspberry pi to communicate with both OpenMV and Mirobot, but if the need arises, OpenMV IDE can be installed on Windows, Mac, Linux, and even Raspberry. WLKATA Studio IDE is available for Windows, Mac, and Linux (Ubuntu). Mac and Windows versions worked perfectly but we had issues getting the linux version up and running. </br></br>
 
 The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
 Source code is located in /home/mirobot. </br></br>
@@ -21,12 +23,10 @@ OpenMV library: needed for the remote_device.py
 https://openmv.io/pages/download
 </br></br>
 rpc : part of the openMV library, needed for remote procedure calls.
-</br>
 Needs to be on both the remote device and the raspberry pi. 
-</br>
 Just copy the file rpc.py into the same folder as your scripts,
 </br>
-https://github.com/openmv/openmv/tree/master/tools/rpc
+https://github.com/openmv/openmv/tree/master/tools/rpc 
 </br></br>
 pyserial : dependency from rpc
 </br>
@@ -35,6 +35,12 @@ pyserial : dependency from rpc
 mirobot-py
 </br>
 `pip install mirobot-py`
+</br></br>
+ast v.: </br>
+https://github.com/python/cpython/blob/main/Lib/ast.py 
+</br></br>
+Numpy:
+´ pip install numpy`
 </br></br>
 
 
