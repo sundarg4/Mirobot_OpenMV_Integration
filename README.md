@@ -1,47 +1,66 @@
-# Small image processing library for WLKATA Mirobot using OpenMV.
+# Small API for working with the WLKATA Mirobot and the OpenMV camera module,
 
-## Instructions
-<details>
-  <summary>Read more</summary>
-  </br>
-  
+This API is split into to source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
+OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
+to both the OpenMV and the Mirobot. </br></br>
 
-Dimensions of the bottom plate:
+OpenMV : https://openmv.io/ </br>
+WLKATA Mirobot : https://www.wlkata.com/ </br></br>
 
-![Dimensions](https://github.com/imageprocessing-hiof/image-processing/blob/main/images/dimensions.png)
-
-
-</details>
 
 ## Installation and dependencies
-<details>
-    <summary>Dependencies</summary>
-    </br>
-    OpenMV library: needed for the remote_device.py
-    https://openmv.io/pages/download
-    </br>
-    rpc : part of the openMV library, needed for remote procedure calls.
-    Needs to be on both the remote device and the raspberry pi. 
-    Just copy the file rpc.py into the same folder as your scripts,
-    https://github.com/openmv/openmv/tree/master/tools/rpc
-    </br>
-    pyserial : dependency from rpc
-    `pip install pyserial`
-    </br>
-    mirobot-py
-    `pip install mirobot-py`
-    </br>
-    
 
-</details>
+This project mainly focuses on working directly with the raspberry pi to communicate with both OpenMV and Mirobot, but if the need arises, OpenMV IDE can be installed on Windows, Mac, Linux, and even Raspberry. WLKATA Studio IDE is available for Windows, Mac, and Linux (Ubuntu). Mac and Windows versions worked perfectly but we had issues getting the linux version up and running. </br></br>
+
+The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
+Source code is located in /home/mirobot. </br></br>
+Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
+`cd mirobot && source ./venv/bin/activate` </br></br>
+
+Dependencies </br>
+OpenMV library: needed for the remote_device.py
+</br>
+https://openmv.io/pages/download
+</br></br>
+rpc : part of the openMV library, needed for remote procedure calls.
+Needs to be on both the remote device and the raspberry pi. 
+Just copy the file rpc.py into the same folder as your scripts,
+</br>
+https://github.com/openmv/openmv/tree/master/tools/rpc 
+</br></br>
+pyserial : dependency from rpc
+</br>
+`pip install pyserial`
+</br></br>
+mirobot-py
+</br>
+`pip install mirobot-py`
+</br></br>
+ast v.: </br>
+https://github.com/python/cpython/blob/main/Lib/ast.py 
+</br></br>
+Numpy: </br>
+`pip install numpy`
+</br></br>
+Scipy: </br>
+` pip install scipy`
+</br></br>
+plotille : For plotting in terminal </br>
+`pip install plotille`
+</br></br>
 
 
-# Code Documentation
-https://github.com/openmv/openmv/blob/master/tools/rpc/README.md
-<details>
-  <summary>Read more</summary>
+## Code Documentation
+Docs for openMV RPC: </br>
+https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br>
 
-  </br>
+The official mirobot manual: </br>
+https://lin-nice.github.io/mirobot_gitbook_en/ </br>
+
+The official python mirobot API: </br>
+https://rirze.github.io/mirobot-py/mirobot/index.html </br></br>
+
+## This API
 
 ```python
 def calibration():
@@ -180,6 +199,4 @@ def draw_blobs(blobs):
 ```
 Draws a rectangle around the minimum area of each blob.
 Also draws a cross at cx,cy of each blob.
-
-</details>
 
