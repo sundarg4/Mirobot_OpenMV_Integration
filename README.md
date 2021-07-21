@@ -13,7 +13,7 @@ Dimensions of the bottom plate:
 
 </details>
 
-`LOL
+`LOL`
 
 ## Installation and dependencies
 <details>
