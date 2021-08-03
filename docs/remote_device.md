@@ -1,4 +1,7 @@
 ### Remote device
+
+The remote device script is run on the OpenMV module. Here is a description of the functionality in this script.
+
 ```python
 def calibration():
 ```
@@ -61,11 +64,6 @@ the blobs found of that color.
 (white_blobs, red_blobs, green_blobs, blue_blobs)
 
 ```python
-def find_len_of_blobs(blobs):
-```
-Returns the length of all lists returned from find_blobs().
-
-```python
 def get_blob_data(blobs, data_dict):
 ```
 Parameters: The list of blobs returned from the fins_blobs function,
@@ -97,39 +95,9 @@ data_dict[total_count] = (color, cx, cy, angle_of_rotation, is_cuboid).
 def get_color(color_code):
 ```
 Translates the color code into its string representation.
-0 = white,
-1 = red,
-2 = green,
-3 = bluee
-
-```python
-def is_cuboid_or_rectangle(blob):
-```
-Parameter: A blob.
-
-Returns:   True if its a rectangle, False if its a cube.
-
-Checks how big the area of a blob is. Through experimentation we foud that 750 was a good value. Thus if the blob has an area of more than 750 it will be considered a rectangle, and if its less than 750 it will be considered a cuboid. 
-
-This threshold value will be different if the camera mount is adjusted, so that the distance from the camera to the working space is different. Or if the objects used are of different diemensions than the ones we used writing this code.
-
-Cube: x * x cm
-Rectangle x * y cm
-
-```python
-def get_angle_of_rotation_tan(blob, prev_degree):
-```
-Parameters: A blob, The previous angle in degrees of that blob.
-
-Returns:    The new angle.
-
-By iterating through the corners of the minimum area the top corner and the right corner are detected.
-The angle is then found by using the atan2 function, which returns in radians. This angle will then be converted to degrees. </br>
-
-If there has been no previous degree than this will be equal to -1 and will be replaced by the angle in degrees.
-
-If there already is a previous anlge, then an exponetial filter will be applied before returning the new angle.
-
+0 = red,
+1 = green,
+2 = bluee
 
 ```python
 def draw_blobs(blobs):
