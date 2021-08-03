@@ -19,9 +19,6 @@ The OpenMV Cam should now be disconnected, and the main.py script is set to run 
 
 `test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
 
-OpenMV : https://openmv.io/ </br>
-WLKATA Mirobot : https://www.wlkata.com/ </br></br>
-
 
 ## Installation and dependencies
 
@@ -85,6 +82,9 @@ https://docs.openmv.io/ </br>
 
 Docs for openMV RPC: </br>
 https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br>
+
+WLKATA Mirobot: </br>
+https://www.wlkata.com/ </br></br>
 
 The official mirobot manual: </br>
 https://lin-nice.github.io/mirobot_gitbook_en/ </br>
