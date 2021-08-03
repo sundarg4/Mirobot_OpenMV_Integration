@@ -4,6 +4,8 @@ This API is split into two source files, `remote_device.py` which should be flas
 OpenMV IDE (https://openmv.io/pages/download), and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
 to both the OpenMV and the Mirobot. </br>
 
+`test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
+
 
 ## Flashing a script to the OpenMV Cam
 
@@ -13,11 +15,7 @@ to both the OpenMV and the Mirobot. </br>
 4. Press ```tools -> Save open script to OpenMV Cam (as main.py)```
 5. Press ```tools -> Reset OpenMV Cam```
 
-The OpenMV Cam should now be disconnected, and the main.py script is set to run automatically when powered.
-
-
-
-`test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
+The OpenMV Cam should now be disconnected, and the main.py script is set to run automatically when powered. </br></br>
 
 ### Software emergency stop
 If to press ```ctr+c``` during the robots operation, the software emergency stop will be activated.
