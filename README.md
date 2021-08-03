@@ -49,7 +49,7 @@ and corresponds to the following ports in code: </br>
 `self.MIROBOT_ONE_PORT` </br>
 `self.MIROBOT_TWO_PORT` </br></br>
 
-Dependencies </br>
+### Dependencies </br>
 OpenMV library: needed for the remote_device.py
 </br>
 https://openmv.io/pages/download
