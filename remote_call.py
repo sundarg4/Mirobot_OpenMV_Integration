@@ -23,8 +23,6 @@ class remote_control():
         portname for mirobot one
     MIROBOT_TWO_PORT : str
         portname for mirobot two
-    window_size : int
-        used for initalizing arrays of correct size.
     prev_cx : list (float)
         List containing cx values for all readings, used for stabalizing data.
     prev_cy : list (float)
@@ -47,12 +45,12 @@ class remote_control():
         self.CAMERA_TWO_PORT = "/dev/ttyACM_OpenMV2"
         self.MIROBOT_ONE_PORT = "/dev/ttyUSB_Mirobot1"
         self.MIROBOT_TWO_PORT = "/dev/ttyUSB_Mirobot2"
-        self.window_size = 100
         self.prev_cx = [-1] * 25
         self.prev_cy = [-1] * 25
         self.prev_area = [-1] * 25
         self.prev_rotation_angle = [-1] * 25
         self.color = []
+        self.is_cube_list = []
         self.april_tags = {}
 
     def get_camera(self, port):
@@ -99,7 +97,6 @@ class remote_control():
                         self.april_tags = ast.literal_eval(apriltag_str)
             else:
                 print("No data...")
-                #return None
 
         except:
             traceback.print_exc(file=sys.stdout)
@@ -145,6 +142,30 @@ class remote_control():
                     self.prev_area[blob_count] = area[blob_count]
                 elif(count == 3):
                     corner_list = self.order_points(np.array(element))
+                    
+                    # Finding cube or domino brick
+                    c_ax = corner_list[0][0]
+                    c_ay = corner_list[0][1]
+                    c_bx = corner_list[1][0]
+                    c_by = corner_list[1][1]
+                    c_cx = corner_list[3][0]
+                    c_cy = corner_list[3][1]
+                    
+                    side_ab = math.hypot(c_bx - c_ax, c_by - c_ay)
+                    print(side_ab)
+                    side_ac = math.hypot(c_cx - c_ax, c_cy - c_ay)
+                    print(side_ac)
+                    
+                    difference = side_ac - side_ab
+                    print("diff " + str(difference))
+                    
+                    if(abs(difference) > (side_ab/3) or abs(difference) > (side_ac/3)):
+                        self.is_cube_list.append(False)
+                        print("DOMINO")
+                    else:
+                        self.is_cube_list.append(True)
+                        print("CUBE")
+
                     angle = self.get_angle_of_rotation(corner_list.tolist())
                     if(self.prev_rotation_angle[blob_count] == -1):
                         self.prev_rotation_angle[blob_count] = angle
@@ -170,27 +191,27 @@ class remote_control():
                 sorted list of corners : [top left, top right, bottom right, bottom left]
 
         '''
-	    # sort the points based on their x-coordinates
-	    xSorted = pts[np.argsort(pts[:, 0]), :]
-	    # grab the left-most and right-most points from the sorted
-	    # x-roodinate points
-	    leftMost = xSorted[:2, :]
-	    rightMost = xSorted[2:, :]
+        # sort the points based on their x-coordinates
+        xSorted = pts[np.argsort(pts[:, 0]), :]
+        # grab the left-most and right-most points from the sorted
+        # x-roodinate points
+        leftMost = xSorted[:2, :]
+        rightMost = xSorted[2:, :]
 	    # now, sort the left-most coordinates according to their
 	    # y-coordinates so we can grab the top-left and bottom-left
 	    # points, respectively
-	    leftMost = leftMost[np.argsort(leftMost[:, 1]), :]
-	    (tl, bl) = leftMost
+        leftMost = leftMost[np.argsort(leftMost[:, 1]), :]
+        (tl, bl) = leftMost
 	    # now that we have the top-left coordinate, use it as an
 	    # anchor to calculate the Euclidean distance between the
 	    # top-left and right-most points; by the Pythagorean
 	    # theorem, the point with the largest distance will be
 	    # our bottom-right point
-	    D = dist.cdist(tl[np.newaxis], rightMost, "euclidean")[0]
-	    (br, tr) = rightMost[np.argsort(D)[::-1], :]
+        D = dist.cdist(tl[np.newaxis], rightMost, "euclidean")[0]
+        (br, tr) = rightMost[np.argsort(D)[::-1], :]
 	    # return the coordinates in top-left, top-right,
 	    # bottom-right, and bottom-left order
-	    return np.array([tl, tr, br, bl], dtype="float32")
+        return np.array([tl, tr, br, bl], dtype="float32")
  
     def get_angle_of_rotation(self, corners):
         '''
@@ -443,8 +464,12 @@ class remote_control():
                     m.send_msg('M3S0')
                     time.sleep(1)
                 except KeyboardInterrupt:
+                    print()
+                    print("You sucessfully stopped the robot.")
+                    print("Press the reset button to end the program.")
+                    print("Home the robot before further operations.")
+                    print()
                     m.send_msg('!')
-                    print("Im so interrupted")
         else:
             print("Can't operate on theese coordinates.")
     
@@ -453,6 +478,10 @@ class remote_control():
             Gets the soft limits for the robots working space.
             Only Z_MIN is different depending on which object
             is to be picked up.
+
+            !!!
+            Z_MIN for a domino brick has not been set. This must be tested and
+            corrected! Currently it is set to the same as a cube for saftey.
 
             Parameters
                 is_cube (bool) : True if a cube, False if a rectangle.
@@ -472,7 +501,8 @@ class remote_control():
             return X_MIN, X_MAX, Y_MIN, Y_MAX, Z_MIN, Z_MAX
         
         elif not is_cube:
-            Z_MIN = 10
+            # Please spesify the correct value for Z_MIN
+            Z_MIN = 58
             return X_MIN, X_MAX, Y_MIN, Y_MAX, Z_MIN, Z_MAX
             
     def fill_data_list(self, interface):
@@ -485,7 +515,7 @@ class remote_control():
             Returns
                 None 
         '''
-        for i in range(100):
+        for i in range(25):
             self.exe_get_data(interface)    
 
     def clear_data_list(self):
@@ -531,3 +561,4 @@ class remote_control():
             right = select_nth((len(items)+1) // 2, items)
 
             return (left + right) / 2
+
