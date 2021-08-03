@@ -1,4 +1,4 @@
-# Small API for working with the WLKATA Mirobot and the OpenMV camera module,
+# WLKATA Mirobot - OpenMV remote control API
 
 This API is split into to source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
 OpenMV IDE (https://openmv.io/pages/download) and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
@@ -19,7 +19,7 @@ Source code is located in /home/mirobot. </br></br>
 Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
 `openmv`. </br>
 
-The ports are configured static, so that they dont change no matter where they are plugged in on the raspberry pi. </br>
+The ports are configured static, so that they dont run into a problem with randomly addressed ports. </br>
 The ports are: </br></br>
 `/dev/ttyACM_OpenMV1`</br>
 `/dev/ttyACM_OpenMV2`</br>
