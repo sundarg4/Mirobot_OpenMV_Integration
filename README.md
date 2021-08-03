@@ -7,7 +7,7 @@ to both the OpenMV and the Mirobot. </br>
 `test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
 
 
-## Flashing a script to the OpenMV Cam
+### Flashing a script to the OpenMV Cam
 
 1. Connect the openMV via USB to a computer and start the OpenMV IDE.
 2. Press connect in the lower left corner of the IDE.
