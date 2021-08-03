@@ -1,3 +1,6 @@
+# Authors:
+# Bjorn Andersson
+# Sundarrajan Gopalakrishnan
 import sensor, image, time, pyb, math,rpc,struct,utime,network, omv
 sensor.reset()
 sensor.set_pixformat(sensor.GRAYSCALE)

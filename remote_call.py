@@ -1,4 +1,6 @@
-# Bjorn and Sundar
+# Authors:
+# Bjorn Andersson
+# Sundarrajan Gopalakrishnan
 
 import json, rpc, struct, math, time,sys, traceback,string,ast
 import numpy as np
