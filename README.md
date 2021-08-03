@@ -1,6 +1,6 @@
 # WLKATA Mirobot - OpenMV remote control API
 
-This API is split into to source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
+This API is split into two source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
 OpenMV IDE (https://openmv.io/pages/download). and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
 to both the OpenMV and the Mirobot. </br>
 
