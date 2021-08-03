@@ -58,13 +58,16 @@ There are four functions to control the robot in this api.
     r.init_robot(r.MIROBOT_ONE_PORT)
     ```
 2. ```python
-    go_to_resting_poing(self, port=None, speed=750):```
+    go_to_resting_poing(self, port=None, speed=750):
+    ```
     This will move the robot to a position where it is easy to calibrate the camera, and also to get a good image of the working space. Port works the same way as above. Speed can be changed if wanted. We have found 750 to be a good speed, and set it as default. It is not recommended to go under 500. Max is 2000, and is also not recommended, because then it moves really fast. IF something were to go wrong, there will be very little time to react.
 
 3. ```python
-     def go_to_zero(self, port=None, speed=750):```
+     def go_to_zero(self, port=None, speed=750):
+   ```
     This will move the robot to it's zero point. This is the position reached after homing and is ideal as starting point for performing tasks. Port and speed, are the same as above.
 
 4. ```python
-     def pick_up_cartesian(self, x, y, z, rx=0, ry=0, rz=0, port=None, speed=750, is_cube=True):```
+     def pick_up_cartesian(self, x, y, z, rx=0, ry=0, rz=0, port=None, speed=750, is_cube=True):
+   ```
     This will pick up a cube/domino brick at the spesified coordinates. rx, ry, rz are provided with the default value 0 to make using the function more smooth. As this only controls the angle of the end effector. Port and speed are the same as above. is_cube is a bool telling if the object to pick up is a cube or a domino brick. The z value will be different depending on this.
