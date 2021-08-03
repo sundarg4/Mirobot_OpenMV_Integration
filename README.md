@@ -7,7 +7,7 @@ to both the OpenMV and the Mirobot. </br>
 
 To flash to a script to the openMV board:
 
-1. Connect the openMV via USB to a computer and start the OpenMVIDE.
+1. Connect the openMV via USB to a computer and start the OpenMV IDE.
 2. Press connect in the lower left corner of the IDE.
 3. Make sure that the script you want to flash is open.
 4. Press ```tools -> Save open script to OpenMV Cam (as main.py)```
