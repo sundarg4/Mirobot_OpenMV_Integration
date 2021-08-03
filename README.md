@@ -19,6 +19,15 @@ The OpenMV Cam should now be disconnected, and the main.py script is set to run 
 
 `test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
 
+###Software emergency stop
+If to press ```ctr+c``` during the robots operation, the software emergency stop will be activated.
+Follow the instructions given in the terminal.
+
+1. Press the reset button on the Mirobot.
+2. Home the robot before further operations.
+
+</br></br>
+
 
 ## Installation and dependencies
 
