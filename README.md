@@ -97,6 +97,7 @@ https://github.com/wlkata/mirobot-py </br></br>
 
 ## This API
 
+### Remote device
 ```python
 def calibration():
 ```
