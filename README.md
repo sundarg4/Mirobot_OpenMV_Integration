@@ -24,7 +24,7 @@ Follow the instructions given in the terminal.
 1. Press the reset button on the Mirobot.
 2. Home the robot before further operations.
 
-</br></br>
+</br>
 
 
 ## Installation and dependencies
