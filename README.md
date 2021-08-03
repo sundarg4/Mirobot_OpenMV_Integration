@@ -82,7 +82,7 @@ plotille : For plotting in terminal </br>
 </br></br>
 
 
-## Documentation
+## External documentation and references
 
 Official OpenMV docs: </br>
 https://docs.openmv.io/ </br>
@@ -91,7 +91,7 @@ Docs for openMV RPC: </br>
 https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br>
 
 WLKATA Mirobot: </br>
-https://www.wlkata.com/ </br></br>
+https://www.wlkata.com/ </br>
 
 The official mirobot manual: </br>
 https://lin-nice.github.io/mirobot_gitbook_en/ </br>
