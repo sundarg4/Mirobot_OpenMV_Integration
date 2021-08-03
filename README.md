@@ -17,7 +17,20 @@ This project mainly focuses on working directly with the raspberry pi to communi
 The raspberry pi is accessed through ssh, or through VNC if a GUI is required. </br>
 Source code is located in /home/mirobot. </br></br>
 Everything is set up to work in a virtual enviroment, to activate it simple run the following command in terminal: </br>
-`cd mirobot && source ./venv/bin/activate` </br></br>
+`cd mirobot/ && source ./venv/bin/activate` </br>
+
+The ports are configured static, so that they dont change no matter where they are plugged in on the raspberry pi. </br>
+The ports are: </br></br>
+`/dev/ttyACM_OpenMV1`</br>
+`/dev/ttyACM_OpenMV2`</br>
+`/dev/ttyUSB_Mirobot1`</br>
+`/dev/ttyUSB_Mirobot2`</br></br>
+
+and corresponds to the following ports in code: </br>
+`self.CAMERA_ONE_PORT` </br>
+`self.CAMERA_TWO_PORT ` </br>
+`self.MIROBOT_ONE_PORT` </br>
+`self.MIROBOT_TWO_PORT` </br></br>
 
 Dependencies </br>
 OpenMV library: needed for the remote_device.py
@@ -52,7 +65,11 @@ plotille : For plotting in terminal </br>
 </br></br>
 
 
-## Code Documentation
+## Documentation
+
+Official OpenMV docs: </br>
+https://docs.openmv.io/ </br>
+
 Docs for openMV RPC: </br>
 https://github.com/openmv/openmv/blob/master/tools/rpc/README.md </br>
 
@@ -60,7 +77,10 @@ The official mirobot manual: </br>
 https://lin-nice.github.io/mirobot_gitbook_en/ </br>
 
 The official python mirobot API: </br>
-https://rirze.github.io/mirobot-py/mirobot/index.html </br></br>
+https://rirze.github.io/mirobot-py/mirobot/index.html </br>
+
+Github for mirobot-py: </br>
+https://github.com/wlkata/mirobot-py </br></br>
 
 ## This API
 
