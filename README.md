@@ -24,9 +24,6 @@ Follow the instructions given in the terminal.
 1. Press the reset button on the Mirobot.
 2. Home the robot before further operations.
 
-</br>
-
-
 ## Installation and dependencies
 
 This project mainly focuses on working directly with the raspberry pi to communicate with both OpenMV and Mirobot, but if the need arises, OpenMV IDE can be installed on Windows, Mac, Linux, and even Raspberry. WLKATA Studio IDE is available for Windows, Mac, and Linux (Ubuntu). Mac and Windows versions worked perfectly but we had issues getting the linux version up and running. </br></br>
