@@ -33,13 +33,12 @@ class remote_control():
         List containing blob rotation for all readings, used for stabalizing data.
     color : list (string)
         List containing string representation of all the blobs.
+    is_cube_list: list (bool)
+        List containing information if the blob is a cube or a domino.
+        True if a cube, False if a domino.
     april_tags : dict
         Dictionary containing data about the april tags, recieved by the OpenMV.
-    Methods:
-    --------
-    To be continued
     '''
-
     def __init__(self):
         self.CAMERA_ONE_PORT = "/dev/ttyACM_OpenMV1"
         self.CAMERA_TWO_PORT = "/dev/ttyACM_OpenMV2"
@@ -152,19 +151,13 @@ class remote_control():
                     c_cy = corner_list[3][1]
                     
                     side_ab = math.hypot(c_bx - c_ax, c_by - c_ay)
-                    print(side_ab)
-                    side_ac = math.hypot(c_cx - c_ax, c_cy - c_ay)
-                    print(side_ac)
-                    
+                    side_ac = math.hypot(c_cx - c_ax, c_cy - c_ay)          
                     difference = side_ac - side_ab
-                    print("diff " + str(difference))
                     
                     if(abs(difference) > (side_ab/3) or abs(difference) > (side_ac/3)):
                         self.is_cube_list.append(False)
-                        print("DOMINO")
                     else:
                         self.is_cube_list.append(True)
-                        print("CUBE")
 
                     angle = self.get_angle_of_rotation(corner_list.tolist())
                     if(self.prev_rotation_angle[blob_count] == -1):
@@ -310,8 +303,8 @@ class remote_control():
             ----------
                 (int) The transformed coordinate.
         '''
-        out_min = -129 #-125 #-129 ##-144
-        out_max = 123 #127 # 123 ##138
+        out_min = -129 
+        out_max = 123
 
         in_min = tag_corners[0][0] * 2
         in_max = tag_corners[1][0] * 2
@@ -334,8 +327,8 @@ class remote_control():
             ----------
                 (int) The transformed coordinate.           
         '''
-        out_min = 104 #100
-        out_max = 294 #290
+        out_min = 104
+        out_max = 294
         
         in_min = tag_corners[0][1] * 2
         in_max = tag_corners[3][1] * 2
@@ -418,6 +411,18 @@ class remote_control():
             with Mirobot(portname = port, debug=True) as m:
                 m.unlock_shaft()
                 m.go_to_cartesian_lin(133,0,80,0,0,0, speed)
+        else:
+            print("Must spesify a valid port.")
+    
+    def go_to_zero(self, port=None, speed=750):
+        '''
+            Moves the Mirobot to its zero position
+        '''
+        if port:
+            with Mirobot(portname = port, debug=True) as m:
+                m.unlock_shaft()
+                m.go_to_zero()
+                time.sleep(1)
         else:
             print("Must spesify a valid port.")
     
@@ -507,7 +512,7 @@ class remote_control():
             
     def fill_data_list(self, interface):
         '''
-            Storing the values of a 100 frames to be processed.
+            Storing the values of a 25 frames to be processed.
 
             parameters
                 interface (rpc.rpc_usb_vcp_master) : The openMV camera used.
@@ -535,6 +540,16 @@ class remote_control():
     def find_mean(self, sample):
         #c = Counter(sample)
         return int(sum(sample) / len(sample))
+
+    def median(self, items):
+    if len(items) % 2:
+        return select_nth(len(items)//2, items)
+
+    else:
+        left  = select_nth((len(items)-1) // 2, items)
+        right = select_nth((len(items)+1) // 2, items)
+
+        return (left + right) / 2
  
     def select_nth(self, n, items):
         pivot = items[0]
@@ -551,14 +566,4 @@ class remote_control():
 
         greater = [item for item in items if item > pivot]
         return select_nth(n, greater)
-
-    def median(self, items):
-        if len(items) % 2:
-            return select_nth(len(items)//2, items)
-
-        else:
-            left  = select_nth((len(items)-1) // 2, items)
-            right = select_nth((len(items)+1) // 2, items)
-
-            return (left + right) / 2
 
