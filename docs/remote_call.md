@@ -5,7 +5,7 @@ remote_call consists of an object "remote_control" which give the user access to
 ## 1. Controlling the OpenMV CAM
 
 First the object needs to be instanziated, eg:
-``` 
+``` python
     import remote_call as rem
 
     r = rem.remote_control()
@@ -34,7 +34,7 @@ In our setup there is only two cameras, but the code is written in such a way th
 
 To control the robot we also need an instance of the remote_control object, eg:
 
-``` 
+```python 
     import remote_call as rem
 
     r = rem.remote_control()
@@ -45,16 +45,16 @@ This will be instansiated within each call to move the robot. This way of operat
 
 There are four functions to control the robot in this api.
 
-1. init_robot(self, port=None)
+1. ```init_robot(self, port=None):```python
     This function will home the robot. The port will be way to control which robot is moving. To move robot 1 make call such as:
 
     ```r.init_robot(r.MIROBOT_ONE_PORT)```
 
-2. go_to_resting_poing(self, port=None, speed=750)
+2. ```go_to_resting_poing(self, port=None, speed=750):```python
     This will move the robot to a position where it is easy to calibrate the camera, and also to get a good image of the working space. Port works the same way as above. Speed can be changed if wanted. We have found 750 to be a good speed, and set it as default. It is not recommended to go under 500. Max is 2000, and is also not recommended, because then it moves really fast. IF something were to go wrong, there will be very little time to react.
 
-3. def go_to_zero(self, port=None, speed=750):
+3. ```def go_to_zero(self, port=None, speed=750):```python
     This will move the robot to it's zero point. This is the position reached after homing and is ideal as starting point for performing tasks. Port and speed, are the same as above.
 
-4. def pick_up_cartesian(self, x, y, z, rx=0, ry=0, rz=0, port=None, speed=750, is_cube=True):
+4. ```def pick_up_cartesian(self, x, y, z, rx=0, ry=0, rz=0, port=None, speed=750, is_cube=True):```python
     This will pick up a cube/domino brick at the spesified coordinates. rx, ry, rz are provided with the default value 0 to make using the function more smooth. As this only controls the angle of the end effector. Port and speed are the same as above. is_cube is a bool telling if the object to pick up is a cube or a domino brick. The z value will be different depending on this.
