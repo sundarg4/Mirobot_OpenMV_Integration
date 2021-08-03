@@ -1,11 +1,11 @@
 # WLKATA Mirobot - OpenMV remote control API
 
 This API is split into two source files, `remote_device.py` which should be flashed onto the OpenMV module using the </br>
-OpenMV IDE (https://openmv.io/pages/download). and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
+OpenMV IDE (https://openmv.io/pages/download), and `remote_call.py`which should be stored on the raspberry pi handeling the remote calls
 to both the OpenMV and the Mirobot. </br>
 
 
-To flash to a script to the openMV board:
+To flash a script to the openMV Cam:
 
 1. Connect the openMV via USB to a computer and start the OpenMV IDE.
 2. Press connect in the lower left corner of the IDE.
