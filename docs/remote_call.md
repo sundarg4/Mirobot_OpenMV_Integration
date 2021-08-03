@@ -17,15 +17,13 @@ cam_one will now hold a reference to the interface needed to communicate with th
 
 To request data from the camera the remote_control object has a function called ```fill_data_list``` which will take an interface as an argument. This function will then get data from the camera and store this data in the instance variables of the remote_call obejct.
 
-```r.fill_data_list(cam_one)``
+```r.fill_data_list(cam_one)```
 
 See the ```test_cam.py``` for an example of how this data can be retrieved.
 
 To access a different camera, a reference could just be stored in the same way as above:
 
-```
-    cam_two = r.get_camera(valid port name)
-```
+```cam_two = r.get_camera(valid port name)```
 
 In our setup there is only two cameras, but the code is written in such a way that it would work with any given valid port. For convinience, we have defined the camera port as instance variables:
 
