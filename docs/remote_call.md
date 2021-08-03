@@ -50,7 +50,8 @@ This will be instansiated within each call to move the robot. This way of operat
 There are four functions to control the robot in this api.
 
 1. ```python
-    init_robot(self, port=None): ```
+    init_robot(self, port=None):
+   ```
     This function will home the robot. The port will be way to control which robot is moving. To move robot 1 make call such as:
 
     ```python
