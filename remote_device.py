@@ -55,10 +55,12 @@ class openmv_remote:
         '''
             Identifying a tag family.
             
-            Parameters:
+            Parameters
+            ----------
                 tag : an april tag
              
-             Returns
+            Returns
+            ----------
                 tag family : The family of the april tag
         '''
         if(tag.family() == image.TAG16H5):
@@ -78,7 +80,8 @@ class openmv_remote:
         '''
             Calibrates the camera.
         
-            Returns:
+            Returns
+            ----------
                 april_tags (dict) : A dictionary containing the april tags
                 calibration_result (bool) : True if successful, False if failed
         '''
@@ -109,14 +112,17 @@ class openmv_remote:
            The find blobs function that will be fed theese values requires they are integers so therefore they are first rounded 
            and then converted to integers before returning them.
 
-           The values returned will be the top left corner of the ROI given by x_min and y_min. And also the width and height of the ROI. (x_min, y_min, w, h)
-
            Importnat to remember is that ROI is found using QQVGA so there is neccessary to call the function upscale_QQVGA_to_QVGA 
            on theese coordinates before using them to find blobs
            
            
-           Parameters
-           ----------
+            Parameters
+            ----------
+                april_tags (dict) : a dictionary of april tags
+            
+            Returns
+            ----------
+                x_min, y_min, w, h : (x,y) of the top left corner of the and the width and height of ROI.
           
         '''
         x_min = float("inf")
@@ -138,21 +144,92 @@ class openmv_remote:
         roi_width = int ( round( x_max - x_min ))
         roi_height = int( math.ceil( y_max - y_min ))
         return x_min, y_min, roi_width, roi_height
+
     def upscale_QQVGA_to_QVGA(self, x,y,w,h):
+        '''
+            Scales from QQVGA to QVGA
+
+            Parameters
+            ----------
+                x, y, w, h (int) : coordinates in QQVGA
+            
+            Returns
+            ----------
+                x, y, w, h (int) : coordinates in QVGA
+        '''
         return x*2,y*2,w*2,h*2
+
     def find_mode(self, sample):
         return max(set(sample), key=sample.count)
+
     def mask_april_tags(self, april_tags,img):
+        '''
+            Masking the april tags by drawing a black rectangle on top of them, to avoid confusion with image processing. 
+            Mostly an issue if looking for white blobs.
+        
+            Parameters
+            ----------
+                april_tags (dict) : A dictionary of april tags
+                img (image) : the image to work on.
+            
+            Returns
+            ----------
+                None
+        '''
         for tag_id,tag in april_tags.items():
             x,y,w,h = tag.rect()
             X,Y,W,H = self.upscale_QQVGA_to_QVGA(x,y,w,h)
             img.draw_rectangle(X-int(W/3),Y-int(H/3),int(W*1.65),int(H*1.65), color=0, fill=True)
+
     def find_blobs(self, x,y,w,h,img):
+        '''
+            Finding blobs with help of the OpenMV function find_blobs()
+            https://docs.openmv.io/library/omv.image.html#image.image.Image.image.find_blobs
+            
+            Parameters
+            ----------
+                x, y, w, h (int) : The region of interest passed in to the find_blobs()
+                img (image) : The image to find blobs in
+            
+            Returns
+            ----------
+                blobs (list) : A list of blob lists (red, green, blue)
+        '''
         red_blobs = img.find_blobs([self.red_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
         green_blobs = img.find_blobs([self.green_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
         blue_blobs = img.find_blobs([self.blue_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
         return [red_blobs, green_blobs, blue_blobs]
+
     def get_blob_data(self, blobs):
+        '''
+            A function to collect all the needed data.
+
+            Loops through the list of blob lists with the enumeration function of python, and so gaining access to both the counter and the list.
+            Then loops through each blob in the current blob_list and gets the following data from each blob:
+
+            cx and cy is taken directly from the OpenMV function blob.cx() and blob.cy(). 
+
+            Blob area is similarly gotten straight from blob.area(). 
+            Worth noting that this area is not the minimum area. 
+            
+            The corners of the minimum area are gotten from the inbuilt function blob.min_corners(). 
+            Although this function is sligthly unstable in the way it returns the corners. And they are returned as a tuple, 
+            which means they are unmutable. Thats why they are appended to a new list, in order to be further proseced on the 
+            remote_call.py running on the raspberry pi.
+
+            Gets the color by sending the "color_code" (counter from the first loop) to the function get_color().
+
+            As a sidenote angle of rotation is calculated on in the remote_call.py and not on the OpenMV.
+
+            Parameters
+            ----------
+                blobs (list) : a list of blob lists (red, green, blue)
+
+            Returns
+            ----------
+            blob_data_list (list) : A list of blob data, each entry stores the following information about a blob
+                                    (cx, cy, area, corners_list, color)
+        '''
         blob_data_list = []
         for color_code, blob_list in enumerate(blobs):
             for blob in blob_list:
@@ -166,14 +243,48 @@ class openmv_remote:
                 color = self.get_color(color_code)
                 blob_data_list.append([cx, cy, area, corners_list, color])
         return blob_data_list
+
     def get_color(self, color_code):
+        '''
+            Gets the string representation of a blob color.
+
+            Parameters
+            ----------
+                color_code (int) : The color code
+            
+            Returns
+            ----------
+                The string representation of the code
+        '''
         if (color_code == 0):
             return "Red"
         elif (color_code == 1):
             return "Green"
         elif (color_code == 2):
             return "Blue"
+
     def get_data(self, data):
+        '''
+            Callback function that gathers data and sends it to the remote caller.
+
+            If calibraion_success is True (the instance variable) then the function will proceed
+            with gathering and sending data, skipping calibrating the camera.
+
+            If False, then no data will be gatherd and calibration will be called.
+
+            Data is sent with the OpenMV rpc package. This remote device is the slave device.
+
+
+            Paraneters
+            ----------
+                data () : used by the OpenMV rpc to send data
+            
+            Returns
+            ----------
+                If calibration_success = True, then the blob data is sent.
+                If calibration_success = False, then a message saying "Calibrating will be sent".
+
+        '''
         if (self.calibration_success):
             print("Calibration Success!")
             x,y,w,h = self.get_roi(self.april_tags)
@@ -191,10 +302,28 @@ class openmv_remote:
             return struct.pack('{}s'.format(len(bytes_data)), bytes_data)
         else:
             self.april_tags, self.calibration_success = self.calibration()
-            return struct.pack('{}s'.format(len("oops")), "oops")
+            return struct.pack('{}s'.format(len("Calibrating")), "Calibrating")
+
     def register_callback(self, call_back_function):
+        '''
+            Helper function to register the callback function to the interface.
+
+            Parameters
+            ----------
+                The function to register
+
+            Returns
+            ----------
+                None
+        '''
         self.interface.register_callback(call_back_function)
+
+# Inisializing the remote object
 openmv_one = openmv_remote()
+
+# Regestering the call back function
 openmv_one.register_callback(openmv_one.get_data)
+
+# Starting the listening loop, awaiting calls from the remote caller (raspberry pi)
 print('Ready To Rock!!!!!!')
 openmv_one.interface.loop()
