@@ -39,8 +39,8 @@ class openmv_remote:
             The threshold used for finding red blobs by find_blobs()
         green_threshold : (int) tuple
             The threshold used for finding green blobs by find_blobs()
-        red_threshold : (int) tuple
-            The threshold used for finding red blobs by find_blobs()
+        blue_threshold : (int) tuple
+            The threshold used for finding blue blobs by find_blobs()
     '''
     
     def __init__(self):
@@ -50,7 +50,17 @@ class openmv_remote:
         self.red_threshold = (16, 57, 50, 84, -55, 59)
         self.green_threshold = (31, 81, -88, -27, -51, 41)
         self.blue_threshold = (9, 66, -20, 85, -128, -14)
+        
     def family_name(self, tag):
+        '''
+            Identifying a tag family.
+            
+            Parameters:
+                tag : an april tag
+             
+             Returns
+                tag family : The family of the april tag
+        '''
         if(tag.family() == image.TAG16H5):
             return "TAG16H5"
         if(tag.family() == image.TAG25H7):
@@ -63,7 +73,15 @@ class openmv_remote:
             return "TAG36H11"
         if(tag.family() == image.ARTOOLKIT):
             return "ARTOOLKIT"
+        
     def calibration(self):
+        '''
+            Calibrates the camera.
+        
+            Returns:
+                april_tags (dict) : A dictionary containing the april tags
+                calibration_result (bool) : True if successful, False if failed
+        '''
         sensor.set_pixformat(sensor.GRAYSCALE)
         sensor.set_framesize(sensor.QQVGA)
         april_tags = {}
@@ -76,7 +94,31 @@ class openmv_remote:
             return april_tags, True
         else:
             return april_tags, False
+        
     def get_roi(self, april_tags):
+        '''
+           Gets the region of interest for where blobs will be detected.
+           
+           The algorithm loops through all the april tags, finds its corners and loops through them.
+          
+           For each corner, it's x and y coordinates will be added to each other, If this sum is smaller than 
+           x_min + y_min then this will be the new values for x_min and y_min. And vice versa with larger values than x_max + y_max.
+
+           The width of the ROI is then found by subtracting x_min from x_max. The height of the ROI is found by subtracting y_min from y_max.
+
+           The find blobs function that will be fed theese values requires they are integers so therefore they are first rounded 
+           and then converted to integers before returning them.
+
+           The values returned will be the top left corner of the ROI given by x_min and y_min. And also the width and height of the ROI. (x_min, y_min, w, h)
+
+           Importnat to remember is that ROI is found using QQVGA so there is neccessary to call the function upscale_QQVGA_to_QVGA 
+           on theese coordinates before using them to find blobs
+           
+           
+           Parameters
+           ----------
+          
+        '''
         x_min = float("inf")
         y_min = float("inf")
         x_max = 0
