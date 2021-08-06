@@ -1,12 +1,18 @@
 # Authors:
 # Bjorn Andersson
 # Sundarrajan Gopalakrishnan
+
+# Imports
 import sensor, image, time, pyb, math,rpc,struct,utime,network, omv
+
+# Initializes the camera
 sensor.reset()
 sensor.set_pixformat(sensor.GRAYSCALE)
 sensor.set_framesize(sensor.QQVGA)
 sensor.skip_frames(time = 2000)
 clock = time.clock()
+
+# Used by the find_apriltags function.
 tag_families = 0
 tag_families |= image.TAG16H5
 tag_families |= image.TAG25H7
@@ -14,7 +20,29 @@ tag_families |= image.TAG25H9
 tag_families |= image.TAG36H10
 tag_families |= image.TAG36H11
 tag_families |= image.ARTOOLKIT
+
 class openmv_remote:
+    '''
+        Class to remotley send data from the OpenMV to the raspberry pi
+    
+        ...
+        
+        Attributes
+        ----------
+        interface : (rpc.rpc_usb_vcp_slave())
+            The interface communicating with the remote caller.
+        calibration_success : (bool)
+            A bool determing if the calibration of the OpenMV has been successfull or not.
+        april_tags : (dict)
+           If calibration_success is True then the april tags dictionary will be stored here, to make the script more efficient.
+        red_threshold : (int) tuple
+            The threshold used for finding red blobs by find_blobs()
+        green_threshold : (int) tuple
+            The threshold used for finding green blobs by find_blobs()
+        red_threshold : (int) tuple
+            The threshold used for finding red blobs by find_blobs()
+    '''
+    
     def __init__(self):
         self.interface = rpc.rpc_usb_vcp_slave()
         self.calibration_success = False
