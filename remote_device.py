@@ -19,7 +19,6 @@ class openmv_remote:
         self.interface = rpc.rpc_usb_vcp_slave()
         self.calibration_success = False
         self.april_tags = {}
-        self.white_threshold = (0, 100, 5, 18, -10, 4)
         self.red_threshold = (16, 57, 50, 84, -55, 59)
         self.green_threshold = (31, 81, -88, -27, -51, 41)
         self.blue_threshold = (9, 66, -20, 85, -128, -14)
@@ -79,11 +78,9 @@ class openmv_remote:
             X,Y,W,H = self.upscale_QQVGA_to_QVGA(x,y,w,h)
             img.draw_rectangle(X-int(W/3),Y-int(H/3),int(W*1.65),int(H*1.65), color=0, fill=True)
     def find_blobs(self, x,y,w,h,img):
-        #white_blobs = img.find_blobs([self.white_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
         red_blobs = img.find_blobs([self.red_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
         green_blobs = img.find_blobs([self.green_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
         blue_blobs = img.find_blobs([self.blue_threshold], area_threshold=100, merge=False, roi=(x,y,w,h))
-        #return [white_blobs, red_blobs, green_blobs, blue_blobs]
         return [red_blobs, green_blobs, blue_blobs]
     def get_blob_data(self, blobs):
         blob_data_list = []
@@ -99,15 +96,6 @@ class openmv_remote:
                 color = self.get_color(color_code)
                 blob_data_list.append([cx, cy, area, corners_list, color])
         return blob_data_list
-    #def get_color(self, color_code):
-        #if (color_code == 0):
-            #return "White"
-        #elif (color_code == 1):
-            #return "Red"
-        #elif (color_code == 2):
-            #return "Green"
-        #elif (color_code == 3):
-            #return "Blue"
     def get_color(self, color_code):
         if (color_code == 0):
             return "Red"
@@ -116,7 +104,6 @@ class openmv_remote:
         elif (color_code == 2):
             return "Blue"
     def get_data(self, data):
-        print("Im alive")
         if (self.calibration_success):
             print("Calibration Success!")
             x,y,w,h = self.get_roi(self.april_tags)
