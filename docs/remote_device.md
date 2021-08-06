@@ -2,6 +2,8 @@
 
 The remote device script is run on the OpenMV module. Here is a description of the functionality in this script.
 
+All functionality is wrapped within an object called openmv_remote.
+
 ```python
 def calibration():
 ```
@@ -61,7 +63,7 @@ Returns a list of blobs separated by color.
 Each color is also a list of its own, containing all
 the blobs found of that color.
 
-(white_blobs, red_blobs, green_blobs, blue_blobs)
+(red_blobs, green_blobs, blue_blobs)
 
 ```python
 def get_blob_data(blobs, data_dict):
@@ -76,20 +78,18 @@ Returns:    The data dictionary containg blob data.
 Loops through the list of blob lists with the enumeration function of python, and so gaining
 access to both the counter and the list.
 
-Further loops through each list in the same manner and gains access to both counter and blob.
+Then loops through each blob in the current blob_list and gets the following data from each blob:
+
+cx and cy is taken directly from the OpenMV function blob.cx() and blob.cy().
+Blob area is similarly gotten straight from blob.area(). Worth noting that this area is not the minimum area.
+The corners of the minimum area are gotten from the inbuilt function blob.min_corners(). Although this function is sligthly unstable in the way it returns the corners. And they are returned as a tuple, which means they are unmutable. Thats why they are appended to a new list, in order to be further proseced on the remote_call.py running on the raspberry pi.
 
 Gets the color by sending the "color_code" (counter from the first loop) to the function get_color().
 
-The variable total count is used to keep an unique identifier for each blob to use as key while adding/updating
-the dictionary.
+As a sidenote angle of rotation is calculated on in the remote_call.py and not on the OpenMV.
 
-The angle of rotation is found by calling the function get_angle_of_rotation_tan()
-
-If the object is a cuboid or a rectangle is found by calling is_cuboid_or_rectangle()
-
-Finally all data is stored to the dictionary like so,
-
-data_dict[total_count] = (color, cx, cy, angle_of_rotation, is_cuboid).
+Finally all data is appended to the dictionary: 
+([cx, cy, area, corners_list, color])
 
 ```python
 def get_color(color_code):
@@ -99,9 +99,5 @@ Translates the color code into its string representation.
 1 = green,
 2 = bluee
 
-```python
-def draw_blobs(blobs):
-```
-Draws a rectangle around the minimum area of each blob.
-Also draws a cross at cx,cy of each blob.
+
 
