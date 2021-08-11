@@ -71,3 +71,14 @@ There are four functions to control the robot in this api.
      def pick_up_cartesian(self, x, y, z, rx=0, ry=0, rz=0, port=None, speed=750, is_cube=True):
    ```
     This will pick up a cube/domino brick at the spesified coordinates. rx, ry, rz are provided with the default value 0 to make using the function more smooth. As this only controls the angle of the end effector. Port and speed are the same as above. is_cube is a bool telling if the object to pick up is a cube or a domino brick. The z value will be different depending on this.
+ 
+ 
+ ## Emergency software stop
+ The emergency software stop is only implemented on ```pick_up_cartesian```, this is because the other functions are just abstractions of some safe functions from the mirobot api.
+ 
+ To activate the emergency stop, press ```ctrl+c```.
+ Then follow the instructions given in terminal.
+ 
+ 1. Reset the robot witht he reset button on the robot base.
+ 2. Home the robot before continuing to work.
+   
