@@ -40,6 +40,12 @@ class remote_control():
         True if a cube, False if a domino.
     april_tags : dict
         Dictionary containing data about the april tags, recieved by the OpenMV.
+    mirobot_one_timer : (time.time() / 60)
+        time in minutes since epoch
+    mirobot_two_timer : (time.time() / 60 ) 
+        time in minutes since epoch
+    HOMING_TIMEOUT : (int) 
+        sets time in minutes until the robot needs to be homed again.
     '''
     def __init__(self):
         self.CAMERA_ONE_PORT = "/dev/ttyACM_OpenMV1"
@@ -53,6 +59,10 @@ class remote_control():
         self.color = []
         self.is_cube_list = []
         self.april_tags = {}
+        self.mirobot_one_timer
+        self.mirobot_two_timer
+        self.HOMING_TIMEOUT = 10
+
 
     def get_camera(self, port):
         '''Returns the rpc interface representing the openMV camera connected to the port.
@@ -392,6 +402,7 @@ class remote_control():
         if port:
             with Mirobot(portname = port, debug=True) as m:
                 m.home_simultaneous()
+                self.set_homing_timer(port)
         else:
             print("Must spesify a valid port.")
   
@@ -409,6 +420,12 @@ class remote_control():
                 speed (int) : The speed of movement of the robot. Ranges from 0 - 2000.
                               Not recommended to run below 500. Default set to 750.
         '''
+
+        need_homing = self.check_homing_timer(port)
+        if need_homing:
+            print("Please home robot before further work.")
+            return 
+
         if port:
             with Mirobot(portname = port, debug=True) as m:
                 m.unlock_shaft()
@@ -420,6 +437,11 @@ class remote_control():
         '''
             Moves the Mirobot to its zero position
         '''
+        need_homing = self.check_homing_timer(port)
+        if need_homing:
+            print("Please home robot before further work.")
+            return 
+
         if port:
             with Mirobot(portname = port, debug=True) as m:
                 m.unlock_shaft()
@@ -452,7 +474,11 @@ class remote_control():
             Returns
                 I dont know - have to find out...
         '''
-        
+        need_homing = self.check_homing_timer(port)
+        if need_homing:
+            print("Please home robot before further work.")
+            return 
+            
         X_MIN, X_MAX, Y_MIN, Y_MAX, Z_MIN, Z_MAX = self.get_soft_limits(is_cube)
         
         if (not x < X_MIN or not x > X_MAX or not y < Y_MIN or not y > Y_MAX 
@@ -479,7 +505,51 @@ class remote_control():
                     m.send_msg('!')
         else:
             print("Can't operate on theese coordinates.")
-    
+
+    def set_homing_timer(self, portname):
+        '''
+            Sets the timer for when the robot was last homed.
+
+            Paramters
+            ----------
+                portname (str) : The port connected to the robot
+            
+            Returns
+            ----------
+                None
+        '''
+        if portname == self.MIROBOT_ONE_PORT:
+            self.mirobot_one_timer = ( time.time() / 60 )
+        if portname == self.MIROBOT_TWO_PORT:
+            self.mirobot_two_timer = ( time.time() / 60 )
+
+    def check_homing_timer(self, portname):
+        '''
+            Checks how long time since the robot was last homed.
+
+            Parameters
+            ----------
+                portname (str) : The port connected to the robot.
+            
+            Returns
+            ----------
+                False if no need to home robot
+                True if need to home robot
+        '''
+        minutes_since_epoch = time.time() / 60
+
+        if portname == self.MIROBOT_ONE_PORT:
+            if (minutes_since_epoch - self.mirobot_one_timer < self.HOMING_TIMEOUT):
+                return False
+            elif (minutes_since_epoch - self.mirobot_one_timer >= self.HOMING_TIMEOUT):
+                return True
+
+        if portname == self.MIROBOT_TWO_PORT:
+            if (minutes_since_epoch - self.mirobot_two_timer < self.HOMING_TIMEOUT):
+                return False
+            elif (minutes_since_epoch - self.mirobot_two_timer >= self.HOMING_TIMEOUT):
+                return True
+
     def get_soft_limits(self, is_cube):
         '''
             Gets the soft limits for the robots working space.
