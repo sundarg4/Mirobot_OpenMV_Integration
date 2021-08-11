@@ -1,6 +1,7 @@
-# Authors:
-# Bjorn Andersson
-# Sundarrajan Gopalakrishnan
+# Copyright (c) 2021-2021 Björn Andersson <bjorn.s.andersson@hiof.no>
+# Copyright (c) 2021-2021 Sundarrajan Gopalakrishnan <>
+#
+# This work is licensed under the MIT license, see the file LICENSE for details.
 
 # Imports
 import sensor, image, time, pyb, math,rpc,struct,utime,network, omv
