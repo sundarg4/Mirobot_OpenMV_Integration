@@ -6,6 +6,10 @@ to both the OpenMV and the Mirobot. </br>
 
 `test_cam.py` and `test_robot.py`demonstrates examples of how to use the API. </br></br>
 
+CAUTION WHILE USING test_robot.py:
+The cartesian coordinates passed in the file test_robot.py, will command the robot to go to a particular coordinate in 3D space. The robot does not have a crash limit and with values more or less than a particular limit (pls refer manual), it might self-destruct and unleash its wrath before you blink. 
+So please advise caution (especially with the Z-axis) before executing the code in real-time. We have added soft-limits for the suction cup, and we recommend you to try with experimenting one unit at a time with Mirobot IDE before updating the soft-limits in the code.
+
 
 ### Flashing a script to the OpenMV Cam
 
